@@ -11,13 +11,12 @@
                             </div>
                             <div class="col-lg-6 px-xl-10">
                                 <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                    <h3 class="h2 text-white mb-0">{{Auth::user()->name}}</h3>
+                                    <h3 class="h2 text-white mb-0" style="text-transform: uppercase;">{{Auth::user()->surname}} {{Auth::user()->name}} </h3>
                                 </div>
                                 <ul class="list-unstyled mb-1-9">
-                                    <li class="mb-2 mb-xl-3 display-28 mt-2"><span class="display-26 text-secondary me-2 font-weight-600">Position:</span> Administrateur</li>
+                                    <li class="mb-2 mb-xl-3 display-28 mt-2"><span class="display-26 text-secondary me-2 font-weight-600">Position:</span> {{Auth::user()->position}}</li>
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span>{{Auth::user()->email}}</li>
-                                    <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Website:</span> www.setit.rnu.tn/</li>
-                                    <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span> 507 - 541 - 4567</li>
+                                    <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span> {{Auth::user()->phone}}</li>
                                 </ul>
                                 <ul class="social-icon-style1 list-unstyled mb-0 ps-0">
                                     <li><a href="#!"><i class="ti-twitter-alt"></i></a></li>

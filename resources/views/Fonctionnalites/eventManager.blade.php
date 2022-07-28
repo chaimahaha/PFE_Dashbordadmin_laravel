@@ -16,11 +16,12 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                      @foreach ($events as $event)
                     <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
-                        <td>Setit</td>
-                        <td><img src="C:\Users\ASUS\Desktop\logosetit.jpg"></td>
-                        <td>evenemeent en mai 2022</td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{$event->id}}</strong></td>
+                        <td>{{$event->titre}}</td>
+                        <td><img src="{{url('event_image/'.$event->image)}}" alt="" width="30px" height="30px"/></td>
+                        <td>{{$event->description}}</td>
                         <td>
                           <div class="dropdown d-flex">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -35,11 +36,12 @@
                           </div>
                         </td>
                     </tr>
+                    @endforeach
                     </tbody>
                   </table>
                 </div>
               </div>
               <div class="mt-2">
-                <a href="formevent" role="button" class="btn btn-primary">Ajouter</a>
+                <a href="add_event" role="button" class="btn btn-primary">Ajouter</a>
                 </div>
 @endsection

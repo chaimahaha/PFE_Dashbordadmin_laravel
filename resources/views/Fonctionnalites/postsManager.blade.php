@@ -59,4 +59,7 @@
                   </table>
                 </div>
               </div>
+              <div class="mt-2">
+                <a href="addpost" role="button" class="btn btn-primary">Ajouter</a>
+                </div>
 @endsection

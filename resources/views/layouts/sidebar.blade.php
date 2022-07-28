@@ -41,7 +41,7 @@
     <script src="../assets/vendor/js/helpers.js"></script>
 
     <script src="../assets/js/config.js"></script>
-
+    <script src="../assets/js/scripts.js"></script>
   </head>
   <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -76,7 +76,7 @@
 
            <!--pages-->
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Pages</span>
+              <span class="menu-header-text">Gestion d'Administrateur</span>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -94,54 +94,9 @@
                     <div data-i18n="Notifications">Notifications</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
-                    <div data-i18n="Connections">Connections</div>
-                  </a>
-                </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Authentications</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Login</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Register</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Forgot Password</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Misc">Misc</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-misc-error.html" class="menu-link">
-                    <div data-i18n="Error">Error</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-misc-under-maintenance.html" class="menu-link">
-                    <div data-i18n="Under Maintenance">Under Maintenance</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+            
             <!-- Forms & Tables -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
             <!-- Tables -->
@@ -322,4 +277,7 @@
           
               <!-- Place this tag in your head or just before your close body tag. -->
               <script async defer src="https://buttons.github.io/buttons.js"></script>
+              <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+              <script type="text/javascript" src="/js/Chart.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         </body>

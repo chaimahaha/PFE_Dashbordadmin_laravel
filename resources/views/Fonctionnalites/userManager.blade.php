@@ -9,17 +9,16 @@
                     <thead>
                       <tr class="table-primary">
                         <th>Id</th>
-                        <th>Nom </th>
-                        <th>Prénom</th>
-                        <th>Login</th>
-                        <th>Mot de passe</th>
-                        <th>Date de naissance</th>
+                        <th>Nom & Prénom</th>
+                        <th>Image</th>
+                        <th>Position</th>
                         <th>Télephone</th>
                         <th>Email</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                      <!--
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
                         <td>Admin</td>
@@ -66,8 +65,12 @@
                           </div>
                         </td>
                       </tr>
+                    -->
                     </tbody>
                   </table>
                 </div>
               </div>
+              <div class="mt-2">
+                <a href="adduser" role="button" class="btn btn-primary">Ajouter</a>
+                </div>
               @endsection
