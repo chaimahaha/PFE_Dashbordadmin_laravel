@@ -20,11 +20,11 @@ Route::get('login', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
 
-
-    Route::get('userManager', [App\Http\Controllers\FonctionnalityController::class, 'user_manager'])->name('userManager');
+   
+    Route::get('userManager', [App\Http\Controllers\Auth\RegisterController::class, 'show'])->name('userManager');
     Route::get('postsManager', [App\Http\Controllers\FonctionnalityController::class, 'posts_manager'])->name('postsManager');
     Route::get('inscriptionManager', [App\Http\Controllers\FonctionnalityController::class, 'inscription_manager'])->name('inscriptionManager');
     Route::get('actualityManager', [App\Http\Controllers\FonctionnalityController::class, 'actuality_manager'])->name('actualityManager');
@@ -45,22 +45,24 @@ Route::middleware(['auth'])->group(function () {
         return view('Forms.addUser');
     });
     Route::post('/post/send','PostController@store')->name('posts.store');
-    Route::get('/', function () {
-        return view('welcome');
-    });
+
     
     Route::get('registeradmin', function () {
         return view('Account.account');
     });
 
-   
+    Route::get('/', function () {
+        return view('welcome');
+    });
     /* *********************************************** 
     Route::post('/event/create','EventController@store')->name('events.store');
     Route::get('/event/create', function () {
         return view('Forms.addEvent');
     });*/
     Route::get('add_event', [App\Http\Controllers\EventController::class, 'index']);
-    Route::post('store-form', [App\Http\Controllers\EventController::class, 'store']);
+    Route::post('/store-form', [App\Http\Controllers\EventController::class, 'store']);
 
 });
-Route::post('register-form', [App\Http\Controllers\RegisterController::class, 'store']);
+Route::post('register-form', [App\Http\Controllers\Auth\RegisterController::class, 'store'])->name('register.form');
+//Route::get('home', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
+

@@ -37,10 +37,11 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    /*public function __construct()
     {
         $this->middleware('guest');
     }
+    */
 
     /**
      * Get a validator for an incoming registration request.
@@ -81,8 +82,12 @@ class RegisterController extends Controller
             $user->phone = $request->phone;
             $user->position = $request->position;
             $user->email = $request->email;
+            $user->password = Hash::make($request->password); 
             $user->save();
-            return redirect('home')->with('status', 'Welcome Admin');
+            $this->guard()->login($user);
+            return redirect('/')->with('status', 'Welcome Admin');
+            //return redirect()->route('home');
+        
     }
 
     
@@ -105,5 +110,14 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'confirmedpassword' => Hash::make($data['password']),
         ]);
+    }
+   
+    public function show()
+    {
+        $users = User::all();
+
+        return View('Fonctionnalites.userManager',compact('users'));
+        //compact t3adi les données lel vue
+
     }
 }
