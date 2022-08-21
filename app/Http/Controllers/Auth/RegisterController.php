@@ -64,15 +64,11 @@ class RegisterController extends Controller
     }
         public function store(Request $request)
     {
-            if($request->hasfile('image'))
-            {
-                $imagename = uniqid() . '_' . time(). '.' . $request->image->extension();
-                $path = public_path() .'/user_image';
-                $request->image->move($path, $imagename);
-                $image = $imagename;
-            }else{
-            $image = '--';
-            }
+        $file=$request->file('image');
+        $imagename = uniqid() . '_' . time(). '.' . $file->extension();    
+        $path = public_path() .'/user_image';
+        $request->image->move($path, $imagename);
+        $image = $imagename;
            $user = new User();
             //$image = "image".uniqid().'.'.$request->file('image')->extension();
                 //$request->file('image')->storeAs("public/event_image",$image);
@@ -119,5 +115,40 @@ class RegisterController extends Controller
         return View('Fonctionnalites.userManager',compact('users'));
         //compact t3adi les données lel vue
 
+    }
+    function deleteUser(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        User::find($request->id)->delete();
+        return back()
+            ->with('success', 'User deleted successfully');
+    }
+    function editUser($id){
+        $users = User::find($id);
+        return view('UpdatedForms.editUser',compact('users'));
+    }
+    public function update(Request $request)
+    {
+        
+        $id=$request->id;
+        $name = $request->input('name');
+        $surname = $request->input('surname');
+        
+        $phone = $request->input('phone');
+        $position = $request->input('position');
+        $email = $request->input('email');
+        $isUpdateSuccess= User::where('id',$id) ->update([  'name'=>$name,
+                                                            'surname'=>$surname,
+                                                            'phone'=>$phone,
+                                                            'position'=>$position,
+                                                            'email'=>$email
+                                                            ]);
+        return redirect('userManager')->with('status', 'User was updated');
     }
 }

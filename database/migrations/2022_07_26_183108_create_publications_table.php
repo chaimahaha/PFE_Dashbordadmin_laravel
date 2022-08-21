@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('publications', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,5 +28,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('publications');
+        Schema::create('publications', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+    });
     }
 };

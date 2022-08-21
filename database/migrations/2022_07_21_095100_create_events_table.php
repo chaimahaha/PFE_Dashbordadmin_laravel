@@ -22,7 +22,7 @@ return new class extends Migration
             $table->String('prix');
             $table->Date('date_start')->format('Y-m-d');
             $table->Date('date_end')->format('Y-m-d');
-
+            $table->softDeletes();
 
             $table->timestamps();
         });
@@ -36,5 +36,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('events');
+        Schema::create('events', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

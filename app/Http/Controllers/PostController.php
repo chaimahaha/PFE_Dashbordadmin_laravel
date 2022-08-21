@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class PostController extends Controller
 {
   public function store(Request $request)
@@ -14,4 +14,5 @@ class PostController extends Controller
      ]);
      echo'sucess';
   }
+  
 }

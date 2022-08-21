@@ -1,4 +1,7 @@
 @extends('layouts.sidebar')
+@section('title')
+  Gestion des évenements
+@endsection
 @section('content')
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des evènements</h4>
@@ -28,10 +31,12 @@
                               <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"
+                              <a class="dropdown-item" href="{{url('/edit-event'.$event->id)}}"
                                 ><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                              <a class="dropdown-item" href="javascript:void(0);"
+                                @if(!$event->trashed())
+                              <a class="dropdown-item" href="{{url('delete-event?id='.$event->id)}};"
                                 ><i class="bx bx-trash me-1"></i> Delete</a>
+                                @endif
                             </div>
                           </div>
                         </td>

@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('actualities', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->string('image');
+            $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,5 +31,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('actualities');
+        Schema::create('actualities', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+    });
     }
 };

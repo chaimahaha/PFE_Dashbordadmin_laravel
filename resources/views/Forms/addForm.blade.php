@@ -1,19 +1,21 @@
 @extends('layouts.sidebar')
+@section('title')
+  Ajouter Formation
+@endsection
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Ajout formation</h1>
+          <div class="col-sm-8">
+            <h4 class="fw-bold py-3 mb-4" >
+                <span class="text-muted fw-light">Fonctionnalités </span>
+                 <span class="text-muted fw-light" > /</span>
+                <a  class="text-muted fw-light" href="manifestationManager"> Gestion des manifestations </a>
+                <span class="text-muted fw-light" > /</span> Ajouter Formation</h4>
           </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
-          </div><!-- /.col -->
+        
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -21,14 +23,12 @@
         <div class="container-fluid">
         <div class="col">
         <div class="card border-dark shadow p-3 mb-5 bg-body rounded">
-            <div class="card-header text-center h4" style="color:#22577E">Formation</div>
             <div class="card-body text-dark">
-                <form action="insert_formation.php" method="post" enctype="multipart/form-data">
+                <form action='store-forma' method="post" enctype="multipart/form-data">
                   @csrf
                     <div class="col-sm-10 mt-3 mx-1">
                         <h1>Création formation</h1>
                         <hr>
-                       
                         <div class="form-group">
                             <label class="fw-bold">Titre</label>
                             <span class="obligatoryFieldMark">*</span>
@@ -52,12 +52,12 @@
                         <div class="form-group">
                             <label class="fw-bold">Date debut</label>
                             <span class="obligatoryFieldMark">*</span>
-                            <input type="datetime-local" class="form-control mt-2 " name="date_debut" id="date" >
+                            <input type="date" class="form-control mt-2 " name="date_start" id="date" >
                         </div><br>
                         <div class="form-group">
                             <label class="fw-bold">Date fin</label>
                             <span class="obligatoryFieldMark">*</span>
-                            <input type="datetime-local" class="form-control mt-2 " name="date_fin" id="date" >
+                            <input type="date" class="form-control mt-2 " name="date_end" id="date" >
                         </div><br>
                       
                         <div class="d-flex justify-content-center">

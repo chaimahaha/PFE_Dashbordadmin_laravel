@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\ArticleSc;
 use App\Models\Publication;
 use Illuminate\Http\Request;
-
+use App\Models\Brevet;
+use App\Models\ChapitreOuv;
+use App\Models\Conference;
+use App\Models\OuvrageSc;
+use Illuminate\Support\Facades\Validator;
 class PublicationController extends Controller
 {
     /**
@@ -46,7 +50,26 @@ class PublicationController extends Controller
      */
     public function show(Publication $publication)
     {
-        //
+        $articles = ArticleSc::all();
+        $brevets = Brevet::all();
+        $ouvrages = OuvrageSc::all();
+        $chapitres = ChapitreOuv::all();
+        $conferences = Conference::all();
+        return View('Fonctionnalites.postsManager',compact('articles','brevets','ouvrages','chapitres','conferences'));
+
+    }
+    function deletePublication(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        Publication::find($request->id)->delete();
+        return back()
+            ->with('success', 'Publication deleted successfully');
     }
 
     /**

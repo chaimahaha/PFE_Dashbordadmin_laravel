@@ -14,7 +14,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Fonctionnalités</title>
+    <title>@yield('title')</title>
 
     <meta name="description" content="" />
 
@@ -37,11 +37,13 @@
     <link rel="stylesheet" href="../assets/css/demo.css" />
 
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <script src="../assets/vendor/js/helpers.js"></script>
 
     <script src="../assets/js/config.js"></script>
     <script src="../assets/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -68,7 +70,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
@@ -81,24 +83,24 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
+                <div data-i18n="Account Settings">Paramètres du Compte</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="profil" class="menu-link">
-                    <div data-i18n="Account">Account</div>
+                    <div data-i18n="Account">Profile</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <!--<li class="menu-item">
                   <a href="pages-account-settings-notifications.html" class="menu-link">
                     <div data-i18n="Notifications">Notifications</div>
                   </a>
-                </li>
+                </li>-->
               </ul>
             </li>
             
             <!-- Forms & Tables -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Ajout &amp; Edit &amp; Supprime</span></li>
             <!-- Tables -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -113,18 +115,13 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="postsManager" class="menu-link">
-                    <div data-i18n="Horizontal Form">Gestion publications</div>
-                  </a>
-                </li>
-                <li class="menu-item">
                   <a href="actualityManager" class="menu-link">
                     <div data-i18n="Vertical Form">Gestion  actualités</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="inscriptionManager" class="menu-link">
-                    <div data-i18n="Vertical Form">Gestion inscription</div>
+                  <a href="manifestationManager" class="menu-link">
+                    <div data-i18n="Vertical Form">Gestion Manifestation</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -133,39 +130,54 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="contentsManager" class="menu-link">
-                    <div data-i18n="Vertical Form">Gestion de contenu</div>
+                  <a href="membreManager" class="menu-link">
+                    <div data-i18n="Vertical Form">Gestion Membres</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="demandManager" class="menu-link">
-                    <div data-i18n="Vertical Form">Gestion des demandes</div>
+                  <a href="domainManager" class="menu-link">
+                    <div data-i18n="Vertical Form">Gestion des domaines</div>
                   </a>
                 </li>
-              </ul>
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <!--<a href="userManager" class="menu-link">-->
+                  <i class="menu-item "></i>
+                  <div data-i18n="Tables">Gestion des papiers</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="postsManager" class="menu-link">
+                      <div data-i18n="Vertical Form">Gestion publications</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="productionManager" class="menu-link">
+                      <div data-i18n="Horizontal Form">Gestion production</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="cooperationManager" class="menu-link">
+                      <div data-i18n="Vertical Form">Gestion coopération</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
             </li>
+          </ul>
             <!-- Misc -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-            <li class="menu-item">
-              <a
-                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Support</div>
-              </a>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">About us</span></li>
+              <li class="menu-item">
+                <a
+                  href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                  target="_blank"
+                  class="menu-link"
+                >
+                  <i class="menu-icon tf-icons bx bx-support"></i>
+                  <div data-i18n="Support">Contacts</div>
+                </a>
             </li>
-            <li class="menu-item">
-              <a
-                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="Documentation">Documentation</div>
-              </a>
-            </li>
+
           </ul>
         </aside>
         <!-- / Menu -->
@@ -206,7 +218,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="../assets/img/avatars/admin.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{url('user_image/'.Auth::user()->image)}} " style="border-radius: 50%" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -215,7 +227,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/admin.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{{url('user_image/'.Auth::user()->image)}} " style="border-radius: 50%" />
                             </div>
                           </div>
                           <div class="flex-grow-1">

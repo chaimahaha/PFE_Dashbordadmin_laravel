@@ -12,20 +12,26 @@ class FonctionnalityController extends Controller
     public function posts_manager(){
         return view('Fonctionnalites.postsManager');
     }
-    public function inscription_manager(){
-        return view('Fonctionnalites.inscriptionManager');
+    public function manifestation_manager(){
+        return view('Fonctionnalites.manifestationManager');
     }
     public function actuality_manager(){
         return view('Fonctionnalites.actualityManager');
     }
-    public function demand_Manager(){
-        return view('Fonctionnalites.demandManager');
+    public function domain_Manager(){
+        return view('Fonctionnalites.domainManager');
     }
-    public function contents_manager(){
-        return view('Fonctionnalites.contentsManager');
+    public function membre_manager(){
+        return view('Fonctionnalites.membreManager');
     }
     public function event_manager(){
         return view('Fonctionnalites.eventManager');
+    }
+    public function cooperation_manager(){
+        return view('Fonctionnalites.cooperationManager');
+    }
+    public function production_manager(){
+        return view('Fonctionnalites.productionManager');
     }
 
 }

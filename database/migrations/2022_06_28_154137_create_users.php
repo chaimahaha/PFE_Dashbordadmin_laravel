@@ -23,6 +23,7 @@ return new class extends Migration
             $table->String('email')->unique();
             $table->String('password');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -34,5 +35,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::create('users', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+        });
     }
 };

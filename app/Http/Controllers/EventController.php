@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class EventController extends Controller
 {
     /**
@@ -46,7 +46,7 @@ class EventController extends Controller
     {
         $request->validate([
             "titre" => "required|min:5",
-            "image" => "required|file|mimes:jpeg,png|max:5000",
+            'image' => 'file|mimes:jpeg,png|max:5000',
             "lieu" => "required",
             "description" => "required",
             "prix" => "required",
@@ -74,7 +74,7 @@ class EventController extends Controller
         $event->date_start = $request->date_start;
         $event->date_end = $request->date_end;
         $event->save();
-        return redirect('add_event')->with('status', 'event was created');
+        return redirect('eventManager')->with('status', 'event was created');
     }
 
     /**
@@ -91,16 +91,29 @@ class EventController extends Controller
         //compact t3adi les données lel vue
 
     }
+    function deleteEvent(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        Event::find($request->id)->delete();
+        return back()
+            ->with('success', 'Event deleted successfully');
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(Event $event)
+    public function editEvent($id)
     {
-        //
+        $events = Event::find($id);
+        return view('UpdatedForms.editEvent',compact('events'));
     }
 
     /**
@@ -112,7 +125,22 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $id=$request->id;
+        $titre = $request->input('titre');
+        $lieu= $request->input('lieu');
+        $description = $request->input('description');
+        $prix = $request->input('prix');
+        $date_start = $request->input('date_start');
+        $date_end = $request->input('date_end');
+        $isUpdateSuccess= Event::where('id',$id) ->update([ 'titre'=>$titre,
+                                                            'lieu'=>$lieu,
+                                                            'description'=>$description,
+                                                            'prix'=>$prix,
+                                                            'date_start'=>$date_start,
+                                                            'date_end'=>$date_end
+                                                            
+                                                            ]);
+        return redirect('eventManager')->with('status', 'Event was updated');
     }
 
     /**
