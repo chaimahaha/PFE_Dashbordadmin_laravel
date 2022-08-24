@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Pfe;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class PfeController extends Controller
 {
     /**
@@ -15,7 +15,9 @@ class PfeController extends Controller
      */
     public function index()
     {
-        return view('Forms.Products.pfe');
+        if (Auth::user()-> is_admin ) 
+        return view('AdminDashboard.Forms.Products.pfe');
+        else return view('MembreDashboard.Forms.Products.pfe');
     }
 
     /**
@@ -35,7 +37,7 @@ class PfeController extends Controller
             'mail_encadrant_2'=>$data['mail_encadrant_2'],
             'institut'=>$data['institut'],
             'etudiant'=>$data['etudiant'],
-            'date_start'=>$data['date_start'],
+            'date_start '=>$data['date_start '],
             'date_end'=>$data['date_end']
         ]);
     }
@@ -58,8 +60,8 @@ class PfeController extends Controller
             "mail_encadrant_2"=>"required",
             "institut"=>"required",
             "etudiant"=>"required",
-            "date_start"=>"",
-            "date_end"=>"",
+            "date_start "=>"",
+            "date_end "=>"",
 
         ]);
         if($request->hasfile('file'))
@@ -80,13 +82,25 @@ class PfeController extends Controller
         $pfe-> encadrant_2 = $request-> encadrant_2;
         $pfe-> mail_encadrant_2= $request->mail_encadrant_2;
         $pfe-> institut= $request->institut;
-        $pfe->  etudiant = $request->etudiant;
+        $pfe-> etudiant = $request->etudiant;
         $pfe->date_start = $request->date_start;
         $pfe-> date_end= $request->date_end;
         $pfe->save();
         return redirect('pfe')->with('status', 'PFE was created');
     }
+    function deletePfe(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        Pfe::find($request->id)->delete();
+        return back()
+            ->with('success', 'PFE deleted successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -104,9 +118,13 @@ class PfeController extends Controller
      * @param  \App\Models\Pfe  $pfe
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pfe $pfe)
+    public function editPfe($id)
     {
-        //
+         $pfes = Pfe::find($id);
+         if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editpfe',compact('pfes'));
+         } else return view('MembreDashboard.UpdatedForms.editpfe',compact('pfes'));
+
     }
 
     /**
@@ -118,7 +136,29 @@ class PfeController extends Controller
      */
     public function update(Request $request, Pfe $pfe)
     {
-        //
+        $id=$request->id;
+        $titre = $request->input('titre');
+        $description = $request->input('description');
+        $encadrant = $request->input('encadrant');
+        $mail_encadrant = $request->input('mail_encadrant');
+        $encadrant_2 = $request->input('encadrant_2');
+        $mail_encadrant_2 = $request->input('mail_encadrant_2');
+        $institut=$request->input('institut');
+        $etudiant=$request->input('etudiant');
+        $date_start=$request->input('date_start');
+        $date_end=$request->input('date_end');
+        $isUpdateSuccess= Pfe::where('id',$id) ->update([   'titre'=>$titre,
+                                                            'description'=>$description,
+                                                            'encadrant'=>$encadrant,
+                                                            'mail_encadrant'=>$mail_encadrant,
+                                                            'encadrant_2'=>$encadrant_2,
+                                                            'mail_encadrant_2'=>$mail_encadrant_2,
+                                                            'institut'=>$institut,
+                                                            'etudiant'=>$etudiant,
+                                                            'date_start'=>$date_start,
+                                                            'date_end'=>$date_end,
+                                                            ]);
+        return redirect('productionManager')->with('status', 'PFE was updated');
     }
 
     /**

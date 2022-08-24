@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manif;
 use App\Http\Controllers\Controller;
 use App\Models\Formation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\returnSelf;
@@ -17,7 +18,7 @@ class FormationController extends Controller
      */
     public function index()
     {
-        return view('Forms.addForm');
+        return view('AdminDashboard.Forms.addForm');
     }
 
     /**
@@ -65,7 +66,8 @@ class FormationController extends Controller
         $forma->date_start = $request->date_start;
         $forma->date_end = $request->date_end;
         $forma->save();
-        return redirect('manifestationManager')->with('status', 'Training was created');
+        return redirect('AdminDashboard.manifestationManager')->with('status', 'Training was created');
+       
     }
     function deleteFormation(Request $request)
     {
@@ -101,7 +103,7 @@ class FormationController extends Controller
     {
        
         $formations = Formation::find($id);
-        return view('UpdatedForms.editForm',compact('formations'));
+        return view('AdminDashboard.UpdatedForms.editForm',compact('formations'));
     }
 
     /**

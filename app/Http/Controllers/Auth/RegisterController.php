@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -31,6 +32,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    
 
     /**
      * Create a new controller instance.
@@ -52,36 +54,63 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'image' => ['required','file','mimes:jpeg,png','max:5000'],
-            'phone' => ['required', 'string', 'max:11'],
-            'position' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:5', 'confirmed'],
-            
+            "nom"=>"required",
+            "prenom" => "required",
+            "cin" => "",
+            "numpassport"=>"",
+            "cnrps" =>"",
+            "gender" => "in:feminin,masculin",
+            "grade"=>"in:Professeur,Maître de conférence,Docteur,Chercheur en thèse,Chercheur en mastère,Ingénieur,Assistant,Maître Assistant,Autre",
+            "email"=>"required",
+            "password"=>"required",
+            "photo" => "file|mimes:jpeg,png|max:5000",
+            "specialite"=>"",
+            "diplome"=>"",
+            "date" => "",
+            "fctadmin"=>"",
+            "scopus"=>"",
+            "orcid"=>"",
+            "tel"=>"",
+            "telfax"=>"",
+            "datediplome"=>"",
         ]);
     }
         public function store(Request $request)
     {
-        $file=$request->file('image');
-        $imagename = uniqid() . '_' . time(). '.' . $file->extension();    
-        $path = public_path() .'/user_image';
-        $request->image->move($path, $imagename);
-        $image = $imagename;
-           $user = new User();
-            //$image = "image".uniqid().'.'.$request->file('image')->extension();
-                //$request->file('image')->storeAs("public/event_image",$image);
-            $user->name = $request->name;
-            $user->image =$image;
-            $user->surname = $request->surname;
-            $user->phone = $request->phone;
-            $user->position = $request->position;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password); 
-            $user->save();
-            $this->guard()->login($user);
-            return redirect('/')->with('status', 'Welcome Admin');
+        if($request->hasFile('photo'))
+            {
+                $photoname = uniqid() . '_' . time(). '.' . $request->photo->extension();
+                $path = public_path() .'/user_image';
+                $request->photo->move($path, $photoname);
+                $photo = $photoname;
+            }else{
+            $photo = '--';
+            }
+        $user= new User();
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->cin = $request->cin;
+        $user->numpassport = $request->numpassport ;
+        $user->cnrps = $request -> cnrps;
+        $user->gender = $request->input('gender');
+        $user-> grade = $request-> input('grade');
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password); 
+        $user->photo = $photo;
+        $user-> specialite= $request->specialite;
+        $user->  diplome= $request-> diplome;
+        $user->date = $request->date;
+        $user->fctadmin = $request->fctadmin;
+        $user-> scopus= $request-> scopus;
+        $user->orcid =$request->orcid;
+        $user->tel=$request->tel;
+        $user->telfax = $request->telfax;
+        $user->datediplome = $request -> datediplome;
+        $user->save();
+        $this->guard()->login($user);
+        
+        return redirect('membreHome')->with('status', 'Welcome Membre');
+       
             //return redirect()->route('home');
         
     }
@@ -97,22 +126,33 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'surname'=>$data['surname'],
-            'image' =>$data['image'],
-            'phone'=>$data['phone'],
-            'position'=>$data['position'],
-            'email' => $data['email'],
+            'nom' => $data['nom'],
+            'prenom' => $data['prenom'],
+            'cin'=>$data['cin'],
+            'numpassport' => $data['numpassport'],
+            'cnrps'=> $data['cnrps'],
+            'gender'=> $data['gender'],
+            'grade'=>$data['grade'],
+            'email'=>$data['email'],
             'password' => Hash::make($data['password']),
             'confirmedpassword' => Hash::make($data['password']),
+            'photo'=>$data['photo'],
+            'specialite'=>$data['specialite'],
+            'diplome'=>$data['diplome'],
+            'date'=>$data['date'],
+            'fctadmin'=>$data['fctadmin'],
+            'scopus'=>$data['scopus'],
+            'orcid'=>$data['orcid'],
+            'tel'=>$data['tel'],
+            'telfax'=>$data['telfax'],
+            'datediplome'=>$data['datediplome']
         ]);
     }
    
     public function show()
     {
         $users = User::all();
-
-        return View('Fonctionnalites.userManager',compact('users'));
+        return View('AdminDashboard.Fonctionnalites.userManager',compact('users'));
         //compact t3adi les données lel vue
 
     }
@@ -123,32 +163,86 @@ class RegisterController extends Controller
             'id' => "required",
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            return redirect()->redirect()->withInput()->withErrors($validator->errors());
         }
         User::find($request->id)->delete();
-        return back()
-            ->with('success', 'User deleted successfully');
+        return redirect()
+            ->with('success', 'user deleted successfully');
     }
     function editUser($id){
         $users = User::find($id);
-        return view('UpdatedForms.editUser',compact('users'));
+        if(Auth::user()->is_admin)
+        return view('AdminDashboard.UpdatedForms.editMem',compact('users'));
+        else return view('MembreDashboard.UpdatedForms.editMem',compact('users'));
     }
     public function update(Request $request)
     {
         
         $id=$request->id;
-        $name = $request->input('name');
-        $surname = $request->input('surname');
-        
-        $phone = $request->input('phone');
-        $position = $request->input('position');
+        $nom = $request->input('nom');
+        $prenom = $request->input('prenom');
+        $cin = $request->input('cin');
+        $numpassport = $request->input('numpassport');
+        $cnrps = $request -> input('cnrps');
+        $gender = $request->input('gender');
+        $grade = $request-> input('grade');
         $email = $request->input('email');
-        $isUpdateSuccess= User::where('id',$id) ->update([  'name'=>$name,
-                                                            'surname'=>$surname,
-                                                            'phone'=>$phone,
-                                                            'position'=>$position,
-                                                            'email'=>$email
+        $specialite= $request->input('specialite');
+        $diplome= $request-> input('diplome');
+        $date = $request->input('date');
+        $fctadmin = $request->input('fctadmin');
+        $scopus= $request-> input('scopus');
+        $orcid =$request->input('orcid');
+        $tel=$request->input('tel');
+        $telfax = $request->input('telfax');
+        $datediplome = $request -> input('datediplome');
+        $isUpdateSuccess= User::where('id',$id) ->update([ 'nom'=>$nom,
+                                                                'prenom'=>$prenom,
+                                                                'cin'=>$cin,
+                                                                'numpassport'=>$numpassport,
+                                                                'cnrps'=>$cnrps,
+                                                                'gender'=>$gender,
+                                                                'grade'=>$grade,
+                                                                'email'=>$email,
+                                                                'specialite'=>$specialite,
+                                                                'diplome'=>$diplome,
+                                                                'date'=>$date,
+                                                                'fctadmin'=>$fctadmin,
+                                                                'scopus'=>$scopus ,
+                                                                'orcid'=>$orcid  ,
+                                                                'tel'=>$tel  ,
+                                                                'telfax'=>$telfax  ,
+                                                                'datediplome'=>$datediplome  ,
                                                             ]);
-        return redirect('userManager')->with('status', 'User was updated');
+        if(Auth::user()->is_admin)
+            return redirect('userManager')->with('status', 'user was updated');
+        else return redirect('profil')->with('status','Your profile undergone some modifications');
     }
+public function index (){
+    return view('AdminDashboard.Forms.addUser');
+}
+public function defineAdmin($id){
+    
+    $user=User::findOrFail($id);
+    if(!$user->is_admin){
+        $user->is_admin=true;
+        $user->save();
+        return redirect()->back()->with('status','Vous avez definir '.$user->prenom.' ' .$user->nom.' tant qu \' administrateur');    
+    }
+    else 
+    return redirect()->back()->with('status','cet utilisateur est actuellement définie comme un administrateur ');
+   
+}
+public function retireAdmin($id){
+    
+    $user=User::findOrFail($id);
+    if($user->is_admin){
+        $user->is_admin=false;
+        $user->save();
+        return redirect()->back()->with('status','Vous avez retirer '.$user->prenom.' ' .$user->nom.' en tant qu \'administrateur');
+    }
+    else 
+    return redirect()->back()->with('status','cet utilisateur est actuellement définie comme un membre ');
+}
+
 }

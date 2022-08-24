@@ -16,7 +16,7 @@ class ManifestationController extends Controller
      */
     public function index()
     {
-        return view('Forms.addConf');
+        return view('AdminDashboard.Forms.addConf');
     }
 
     /**
@@ -75,7 +75,7 @@ class ManifestationController extends Controller
     {
         $manifestations = Manifestation::all();
         $formations = Formation::all();
-        return View('Fonctionnalites.manifestationManager',compact('manifestations','formations'));
+        return View('AdminDashboard.Fonctionnalites.manifestationManager',compact('manifestations','formations'));
     }
     function deleteManifestation(Request $request)
     {
@@ -100,7 +100,7 @@ class ManifestationController extends Controller
     public function editManifestation($id)
     {
         $manifestations = Manifestation::find($id);
-        return view('UpdatedForms.editConf',compact('manifestations'));
+        return view('AdminDashboard.UpdatedForms.editManif',compact('manifestations'));
     }
 
     /**

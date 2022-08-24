@@ -6,7 +6,7 @@ use App\Models\Cooperation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\returnSelf;
-
+use Illuminate\Support\Facades\Auth;
 class CooperationController extends Controller
 {
     /**
@@ -15,8 +15,9 @@ class CooperationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view ('Forms.addCoop');
+    {   if (Auth::user()-> is_admin ) {
+        return view ('AdminDashboard.Forms.addCoop');
+    } else return view ('MembreDashboard.Forms.addCoop');
     }
 
     /**
@@ -89,9 +90,10 @@ class CooperationController extends Controller
     public function show(Cooperation $cooperation)
     {
         $cooperations = Cooperation::all();
-
-        return View('Fonctionnalites.cooperationManager',compact('cooperations'));
-    }
+        if (Auth::user()-> is_admin ) {
+        return View('AdminDashboard.Fonctionnalites.cooperationManager',compact('cooperations'));
+    } else return View('MembreDashboard.Fonctionnalites.cooperationManager',compact('cooperations'));
+}
     function deleteCooperation(Request $request)
     {
 
@@ -114,7 +116,9 @@ class CooperationController extends Controller
     public function editCooperation($id)
     {
         $cooperations =Cooperation::find($id);
-        return view('UpdatedForms.editCoop',compact('cooperations'));
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editCoop',compact('cooperations'));}
+        else return view('MembreDashboard.UpdatedForms.editCoop',compact('cooperations'));
     }
 
     /**

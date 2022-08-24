@@ -6,6 +6,7 @@ use App\Models\Brevet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 class BrevetController extends Controller
 {
     /**
@@ -15,7 +16,9 @@ class BrevetController extends Controller
      */
     public function index()
     {
-        return view('Forms.Posts.brevet');
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.Forms.Posts.brevet');}
+        else return view('MembreDashboard.Forms.Posts.brevet');
     }
 
     /**
@@ -48,7 +51,7 @@ class BrevetController extends Controller
     {
         $request->validate([
             "titre" => "required",
-            "annee"=>"in:2022",
+            "annee"=>"required",
             "auteur" => "required",
             "mail"=>"required",
             "auteurex"=>"required",
@@ -69,7 +72,7 @@ class BrevetController extends Controller
             }
         $brevet= new Brevet();
         $brevet->titre = $request->titre;
-        $brevet-> annee = $request->input('annee');
+        $brevet-> annee = $request->annee;;
         $brevet-> auteur = $request->auteur;
         $brevet-> mail = $request->mail;
         $brevet-> auteurex = $request->auteurex ;
@@ -80,7 +83,19 @@ class BrevetController extends Controller
         $brevet->save();
         return redirect('brevet')->with('status', 'brevet was created');
     }
+    function deleteBrevet(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        Brevet::find($request->id)->delete();
+        return back()
+            ->with('success', 'Brevet deleted successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -98,9 +113,12 @@ class BrevetController extends Controller
      * @param  \App\Models\Brevet  $brevet
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brevet $brevet)
+    public function editBrevet($id)
     {
-        //
+        $brevets = Brevet::find($id);
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editBrevet',compact('brevets'));}
+        else return view('MembreDashboard.UpdatedForms.editBrevet',compact('brevets'));
     }
 
     /**
@@ -112,7 +130,25 @@ class BrevetController extends Controller
      */
     public function update(Request $request, Brevet $brevet)
     {
-        //
+        $id=$request->id;
+        $titre = $request->input('titre');
+        $annee = $request->input('annee');
+        $auteur = $request->input('auteur');
+        $mail = $request->input('mail');
+        $auteurex = $request->input('auteurex');
+        $mailex = $request->input('mailex');
+        $sujet = $request->input('sujet');
+        $date = $request->input('date');
+        $isUpdateSuccess= Brevet::where('id',$id) ->update([ 'titre'=>$titre,
+                                                                'annee'=>$annee,
+                                                                'auteur'=>$auteur,
+                                                                'mail'=>$mail,
+                                                                'auteurex'=>$auteurex,
+                                                                'mailex'=>$mailex,
+                                                                'sujet'=>$sujet,
+                                                                'date'=>$date,
+                                                            ]);
+        return redirect('postsManager')->with('status', 'Brevet was updated');
     }
 
     /**

@@ -1,0 +1,1 @@
+@extends('MembreDashboard.Fonctionnalites.layouts.sidebar')

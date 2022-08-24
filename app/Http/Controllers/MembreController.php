@@ -6,6 +6,7 @@ use App\Models\Membre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Backtrace\File;
 class MembreController extends Controller
 {
     /**
@@ -15,7 +16,7 @@ class MembreController extends Controller
      */
     public function index()
     {
-        return view('Forms.addMem');
+        return view('AdminDashboard.Forms.addMem');
     }
 
     /**
@@ -80,7 +81,7 @@ class MembreController extends Controller
         if($request->hasFile('photo'))
             {
                 $photoname = uniqid() . '_' . time(). '.' . $request->photo->extension();
-                $path = public_path() .'/membre_image';
+                $path = public_path() .'/membre_images';
                 $request->photo->move($path, $photoname);
                 $photo = $photoname;
             }else{
@@ -107,6 +108,7 @@ class MembreController extends Controller
         $membre->telfax = $request->telfax;
         $membre->datediplome = $request -> datediplome;
         $membre->save();
+       
         return redirect('membreManager')->with('status', 'membre was created');
     }
 
@@ -119,7 +121,7 @@ class MembreController extends Controller
     public function show(Membre $membre)
     {
        $membres = Membre::all();
-       return view ('Fonctionnalites.membreManager',compact('membres'));
+       return view ('AdminDashboard.Fonctionnalites.membreManager',compact('membres'));
     }
     function deleteMembre(Request $request)
     {
@@ -143,7 +145,7 @@ class MembreController extends Controller
     public function editMembre($id)
     {
         $membres = Membre::find($id);
-        return view('UpdatedForms.editMem',compact('membres'));
+        return view('AdminDashboard.UpdatedForms.editMem',compact('membres'));
     }
 
     /**
@@ -154,8 +156,7 @@ class MembreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Membre $membre)
-    {
-        $id=$request->id;
+    {      $id=$request->id;
         $nom = $request->input('nom');
         $prenom = $request->input('prenom');
         $cin = $request->input('cin');

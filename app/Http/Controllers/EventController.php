@@ -14,7 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        return view('Forms.addEvent');
+        return view('AdminDashboard.Forms.addEvent');
 
     }
 
@@ -87,7 +87,7 @@ class EventController extends Controller
     {
         $events = Event::all();
 
-        return View('Fonctionnalites.eventManager',compact('events'));
+        return View('AdminDashboard.Fonctionnalites.eventManager',compact('events'));
         //compact t3adi les données lel vue
 
     }
@@ -113,7 +113,7 @@ class EventController extends Controller
     public function editEvent($id)
     {
         $events = Event::find($id);
-        return view('UpdatedForms.editEvent',compact('events'));
+        return view('AdminDashboard.UpdatedForms.editEvent',compact('events'));
     }
 
     /**

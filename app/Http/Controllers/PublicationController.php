@@ -55,7 +55,7 @@ class PublicationController extends Controller
         $ouvrages = OuvrageSc::all();
         $chapitres = ChapitreOuv::all();
         $conferences = Conference::all();
-        return View('Fonctionnalites.postsManager',compact('articles','brevets','ouvrages','chapitres','conferences'));
+        return View('AdminDashboard.Fonctionnalites.postsManager',compact('articles','brevets','ouvrages','chapitres','conferences'));
 
     }
     function deletePublication(Request $request)

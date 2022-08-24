@@ -20,13 +20,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth'])->group(function () {
     /**************************************************************************** */
     Route::get('userManager', [App\Http\Controllers\Auth\RegisterController::class, 'show'])->name('userManager');
+    Route::get('adduser',[App\Http\Controllers\Auth\RegisterController::class, 'index']);
     Route::get('/delete-user',[App\Http\Controllers\Auth\RegisterController::class,'deleteUser']);
     Route::get('/edit-user{id}',[App\Http\Controllers\Auth\RegisterController::class, 'editUser']);
     Route::put('update-user{id}',[App\Http\Controllers\Auth\RegisterController::class, 'update']);
+    Route::put("defineadmin/{id}",[App\Http\Controllers\Auth\RegisterController::class, 'defineAdmin']);
+    Route::put('retireadmin/{id}',[App\Http\Controllers\Auth\RegisterController::class, 'retireAdmin']);
+    /*
+    Route::post('/store-mem',[App\Http\Controllers\MembreController::class, 'store']);
+    Route::get('/delete-mem',[App\Http\Controllers\MembreController::class,'deleteMembre']);
+    Route::get('/edit-mem{id}',[App\Http\Controllers\MembreController::class, 'editMembre']);
+    Route::put('update-mem{id}',[App\Http\Controllers\MembreController::class, 'update']);*/
    /******************************************************************************* */
-    Route::get('postsManager', [App\Http\Controllers\AuteurProjetController::class, 'show'])->name('postsManager');
-    Route::get('/delete-auteur',[App\Http\Controllers\AuteurProjetController::class,'deleteAuteur']);
-  
     /******************************************************************************************** */
     Route::get('addform', [App\Http\Controllers\Manif\FormationController::class, 'index']);
     Route::post('store-forma', [App\Http\Controllers\Manif\FormationController::class, 'store']);
@@ -41,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('addconf', [App\Http\Controllers\Manif\ManifestationController::class, 'store']);
     Route::get('/delete-manif',[App\Http\Controllers\Manif\ManifestationController::class,'deleteManifestation']);
     Route::get('/edit-conf{id}',[App\Http\Controllers\Manif\ManifestationController::class, 'editManifestation']);
-    Route::put('update-conf{id}',[App\Http\Controllers\Manif\ManifestationController::class, 'update']);
+    Route::put('/update-conf{id}',[App\Http\Controllers\Manif\ManifestationController::class, 'update']);
     /*************************************************************************************** */
      /*************************************************************************************** */
     Route::get('domainManager', [App\Http\Controllers\DomaineController::class, 'show'])->name('domainManager');
@@ -51,10 +56,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-dom{id}',[App\Http\Controllers\DomaineController::class, 'editDomain']);
     Route::put('update-dom{id}',[App\Http\Controllers\DomaineController::class, 'update']);
     /************************************************************************************************/
-    Route::get('productionManager', [App\Http\Controllers\FonctionnalityController::class, 'production_manager'])->name('productionManager');
-    Route::get('profil', function () {return view('NotifProfil.profil');  });
+    Route::get('profil', [App\Http\Controllers\HomeController::class, 'profile']);
     Route::get('addpost', function () {return view('Forms.addPost'); });
-    Route::get('adduser', function () {return view('Forms.addUser');});
     Route::post('/post/send','PostController@store')->name('posts.store');
     Route::get('registeradmin', function () { return view('Account.account'); });
     //Route::get('/', function () {return view('welcome');});
@@ -68,18 +71,34 @@ Route::middleware(['auth'])->group(function () {
     /****************************************************************************** */
     Route::get('article',[App\Http\Controllers\Pub\ArticleScController::class, 'index']);
     Route::post('/store-art',[App\Http\Controllers\Pub\ArticleScController::class, 'store']);
+    Route::get('/delete-art',[App\Http\Controllers\Pub\ArticleScController::class,'deleteArticle']);
+    Route::get('/edit-art{id}',[App\Http\Controllers\Pub\ArticleScController::class, 'editArticle']);
+    Route::put('update-art{id}',[App\Http\Controllers\Pub\ArticleScController::class, 'update']);
     /********************************************************************************* */
     Route::get('brevet',[App\Http\Controllers\Pub\BrevetController::class, 'index']);
     Route::post('/store-brev',[App\Http\Controllers\Pub\BrevetController::class, 'store']);
+    Route::get('/delete-brev',[App\Http\Controllers\Pub\BrevetController::class,'deleteBrevet']);
+    Route::get('/edit-brev{id}',[App\Http\Controllers\Pub\BrevetController::class, 'editBrevet']);
+    Route::put('update-brev{id}',[App\Http\Controllers\Pub\BrevetController::class, 'update']);
     /********************************************************************************* */
+    Route::get('postsManager', [App\Http\Controllers\Pub\OuvrageScController::class, 'show'])->name('postsManager');
     Route::get('ouvrage',[App\Http\Controllers\Pub\OuvrageScController::class, 'index']);
     Route::post('/store-ouv',[App\Http\Controllers\Pub\OuvrageScController::class, 'store']);
+    Route::get('/delete-ouv',[App\Http\Controllers\Pub\OuvrageScController::class,'deleteOuvrage']);
+    Route::get('/edit-ouv{id}',[App\Http\Controllers\Pub\OuvrageScController::class, 'editOuvrage']);
+    Route::put('update-ouv{id}',[App\Http\Controllers\Pub\OuvrageScController::class, 'update']);
     /*********************************************************************************** */
     Route::get('chapitre',[App\Http\Controllers\Pub\ChapitreOuvController::class, 'index']);
     Route::post('/store-chap',[App\Http\Controllers\Pub\ChapitreOuvController::class, 'store']);
+    Route::get('/delete-chap',[App\Http\Controllers\Pub\ChapitreOuvController::class,'deleteChapitre']);
+    Route::get('/edit-chap{id}',[App\Http\Controllers\Pub\ChapitreOuvController::class, 'editChapitre']);
+    Route::put('update-chap{id}',[App\Http\Controllers\Pub\ChapitreOuvController::class, 'update']);
     /******************************************************************************** */
     Route::get('conference',[App\Http\Controllers\Pub\ConferenceController::class, 'index']);
     Route::post('/store-conf',[App\Http\Controllers\Pub\ConferenceController::class, 'store']);
+    Route::get('/delete-conference',[App\Http\Controllers\Pub\ConferenceController::class,'deleteconference']);
+    Route::get('/editconference{id}',[App\Http\Controllers\Pub\ConferenceController::class, 'editConference']);
+    Route::put('/updateconference{id}',[App\Http\Controllers\Pub\ConferenceController::class, 'update']);
     /********************************************************************* */
     Route::get('actualityManager', [App\Http\Controllers\ActualityController::class, 'show'])->name('actualityManager');
     Route::get('addact', [App\Http\Controllers\ActualityController::class, 'index']);
@@ -88,12 +107,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-act{id}',[App\Http\Controllers\ActualityController::class, 'editActuality']);
     Route::put('update-act{id}',[App\Http\Controllers\ActualityController::class, 'update']);
     /*********************************************************************** */
-    Route::get('membreManager', [App\Http\Controllers\MembreController::class, 'show'])->name('membreManager');
-    Route::get('addmem',[App\Http\Controllers\MembreController::class, 'index']);
-    Route::post('/store-mem',[App\Http\Controllers\MembreController::class, 'store']);
-    Route::get('/delete-mem',[App\Http\Controllers\MembreController::class,'deleteMembre']);
-    Route::get('/edit-mem{id}',[App\Http\Controllers\MembreController::class, 'editMembre']);
-    Route::put('update-mem{id}',[App\Http\Controllers\MembreController::class, 'update']);
     /****************************************************************************************** */
     Route::get('addproduct', function () {return view('Forms.addProd');});
     /******************************************************************** */
@@ -104,17 +117,27 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-coop{id}',[App\Http\Controllers\CooperationController::class, 'editCooperation']);
     Route::put('update-coop{id}',[App\Http\Controllers\CooperationController::class, 'update']);
     /******************************************************************************* */
+    Route::get('productionManager', [App\Http\Controllers\Prod\TheseController::class, 'show'])->name('productionManager');
     Route::get('these',[App\Http\Controllers\Prod\TheseController::class, 'index']);
     Route::post('/store-these',[App\Http\Controllers\Prod\TheseController::class, 'store']);
+    Route::get('/delete-these',[App\Http\Controllers\Prod\TheseController::class,'deleteThese']);
+    Route::get('/edit-these{id}',[App\Http\Controllers\Prod\TheseController::class, 'editThese']);
+    Route::put('/update-these{id}',[App\Http\Controllers\Prod\TheseController::class, 'update']);
     /******************************************************************************** */
     Route::get('pfe',[App\Http\Controllers\Prod\PfeController::class, 'index']);
     Route::post('/store-pfe',[App\Http\Controllers\Prod\PfeController::class, 'store']);
+    Route::get('/delete-pfe',[App\Http\Controllers\Prod\PfeController::class,'deletePfe']);
+    Route::get('/edit-pfe{id}',[App\Http\Controllers\Prod\PfeController::class, 'editPfe']);
+    Route::put('update-pfe{id}',[App\Http\Controllers\Prod\PfeController::class, 'update']);
     /*********************************************************************************** */
     Route::get('hab',[App\Http\Controllers\Prod\HabilitationController::class, 'index']);
     Route::post('/store-hab',[App\Http\Controllers\Prod\HabilitationController::class, 'store']);
-
+    Route::get('/delete-hab',[App\Http\Controllers\Prod\HabilitationController::class,'deleteHabilitation']);
+    Route::get('/edit-hab{id}',[App\Http\Controllers\Prod\HabilitationController::class, 'editHabilitation']);
+    Route::put('update-hab{id}',[App\Http\Controllers\Prod\HabilitationController::class, 'update']);
     /*************************************************************************** */
-    Route::get('/',function(){return view('Dashboard.dashboard1');});
+    Route::get('/',function(){return view('AdminDashboard.Dashboard.dashboard1');});
+    Route::get('membreHome',function(){ return view ('MembreDashboard.Fonctionnalites.home'); });
 });
 
 

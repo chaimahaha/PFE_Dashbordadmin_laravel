@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Prod;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\These;
+use App\Models\Pfe;
+use App\Models\habilitation;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class TheseController extends Controller
 {
     /**
@@ -15,7 +17,10 @@ class TheseController extends Controller
      */
     public function index()
     {
-        return view('Forms.Products.these');
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.Forms.Products.these');}
+        else return view('MembreDashboard.Forms.Products.these');
+
     }
 
     /**
@@ -50,7 +55,7 @@ class TheseController extends Controller
     {
         $request ->validate([
             "titre" => "required",
-            "annee"=>"in:2022",
+            "annee"=>"required",
             "file" => "required|mimes:pdf|max:10000",
             "sujet" => "required",
             "anneeinscrip"=>"required",
@@ -72,7 +77,7 @@ class TheseController extends Controller
             }
         $these= new These();
         $these->titre = $request->titre;
-        $these->annee = $request->input('annee');
+        $these->annee = $request->annee;
         $these->file = $file;
         $these->sujet = $request->sujet;
         $these-> anneeinscrip= $request->anneeinscrip;
@@ -86,7 +91,19 @@ class TheseController extends Controller
 
         
     }
+    function deleteThese(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        These::find($request->id)->delete();
+        return back()
+            ->with('success', 'These deleted successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -95,7 +112,12 @@ class TheseController extends Controller
      */
     public function show(These $these)
     {
-        
+        $theses = These::all();
+        $pfes=Pfe::all();
+        $habilitations = habilitation::all();
+        if (Auth::user()-> is_admin ) {
+        return View('AdminDashboard.Fonctionnalites.productionManager',compact('theses','pfes','habilitations'));
+        } else return View('MembreDashboard.Fonctionnalites.productionManager',compact('theses','pfes','habilitations'));
     }
 
     /**
@@ -104,9 +126,12 @@ class TheseController extends Controller
      * @param  \App\Models\These  $these
      * @return \Illuminate\Http\Response
      */
-    public function edit(These $these)
+    public function editThese($id)
     {
-        //
+        $theses = These::find($id);
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editThese',compact('theses'));
+        } else return view('MembreDashboard.UpdatedForms.editThese',compact('theses'));
     }
 
     /**
@@ -118,7 +143,27 @@ class TheseController extends Controller
      */
     public function update(Request $request, These $these)
     {
-        //
+        $id=$request->id;
+        $titre = $request->input('titre');
+        $annee = $request->input('annee');
+        $sujet = $request->input('sujet');
+        $anneeinscrip = $request->input('anneeinscrip');
+        $encadrant = $request->input('encadrant');
+        $mail_encadrant = $request->input('mail_encadrant');
+        $encadrant_2 = $request->input('encadrant_2');
+        $mail_encadrant_2 = $request->input('mail_encadrant_2');
+        $cotutelle = $request->input('cotutelle');
+        $isUpdateSuccess= These::where('id',$id) ->update([ 'titre'=>$titre,
+                                                                'annee'=>$annee,
+                                                                'sujet'=>$sujet,
+                                                                'anneeinscrip'=>$anneeinscrip,
+                                                                'encadrant'=>$encadrant,
+                                                                'mail_encadrant'=>$mail_encadrant,
+                                                                'encadrant_2'=>$encadrant_2,
+                                                                'mail_encadrant_2'=>$mail_encadrant_2,
+                                                                'cotutelle'=>$cotutelle
+                                                            ]);
+        return redirect('productionManager')->with('status', 'These was updated');
     }
 
     /**

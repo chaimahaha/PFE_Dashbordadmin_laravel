@@ -6,7 +6,7 @@ use App\Models\ArticleSc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 class ArticleScController extends Controller
 {
     /**
@@ -16,7 +16,9 @@ class ArticleScController extends Controller
      */
     public function index()
     {
-       return view('Forms.Posts.article');
+        if (Auth::user()-> is_admin ) {
+       return view('AdminDashboard.Forms.Posts.article');}
+       else return view('MembreDashboard.Forms.Posts.article');
     }
 
     /**
@@ -54,7 +56,7 @@ class ArticleScController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "annee"=>"in:2022",
+            "annee"=>"required",
             "titre" => "required",
             "lien" => "required",
             "file" => "required|mimes:pdf,doc,docx|max:10000",
@@ -81,7 +83,7 @@ class ArticleScController extends Controller
             $file = '--';
             }
         $article= new ArticleSc();
-        $article->annee = $request->input('annee');
+        $article->annee = $request->annee;
         $article->titre = $request->titre;
         $article->lien = $request->lien;
         $article->file = $file;
@@ -99,7 +101,19 @@ class ArticleScController extends Controller
         $article->save();
         return redirect('article')->with('status', 'article was created');
     }
+    function deleteArticle(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        ArticleSc::find($request->id)->delete();
+        return back()
+            ->with('success', 'Article deleted successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -117,9 +131,12 @@ class ArticleScController extends Controller
      * @param  \App\Models\ArticleSc  $articleSc
      * @return \Illuminate\Http\Response
      */
-    public function edit(ArticleSc $articleSc)
+    public function editArticle($id)
     {
-        //
+        $articles = ArticleSc::find($id);
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editArticle',compact('articles'));
+        } else  return view('MembreDashboard.UpdatedForms.editArticle',compact('articles'));
     }
 
     /**
@@ -131,7 +148,39 @@ class ArticleScController extends Controller
      */
     public function update(Request $request, ArticleSc $articleSc)
     {
-        //
+        $id=$request->id;
+        $annee = $request->input('annee');
+        $titre = $request->input('titre');
+        $lien = $request->input('lien');
+        $date = $request->input('date');
+        $auteur = $request->input('auteur');
+        $mail = $request->input('mail');
+        $auteurex = $request->input('auteurex');
+        $mailex = $request->input('mailex');
+        $titre_journal = $request->input('titre_journal');
+        $quartile = $request->input('quartile');
+        $volume= $request->input('volume');
+        $impact= $request-> input('impact');
+        $indexation = $request->input('indexation');
+        $site_revue= $request-> input('site_revue');
+        $isUpdateSuccess= ArticleSc::where('id',$id) ->update([ 'annee'=>$annee,
+                                                                'titre'=>$titre,
+                                                                'lien'=>$lien,
+                                                                'date'=>$date,
+                                                                'auteur'=>$auteur,
+                                                                'mail'=>$mail,
+                                                                'auteurex'=>$auteurex,
+                                                                'mailex'=>$mailex,
+                                                                'titre_journal'=>$titre_journal,
+                                                                'quartile'=>$quartile,
+                                                                'volume'=>$volume,
+                                                                'impact'=>$impact,
+                                                                'indexation'=>$indexation,
+                                                                'site_revue'=>$site_revue
+
+
+                                                            ]);
+        return redirect('postsManager')->with('status', 'Article was updated');
     }
 
     /**

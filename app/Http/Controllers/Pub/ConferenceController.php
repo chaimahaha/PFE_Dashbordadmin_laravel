@@ -6,6 +6,7 @@ use App\Models\Conference;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 class ConferenceController extends Controller
 {
     /**
@@ -15,7 +16,10 @@ class ConferenceController extends Controller
      */
     public function index()
     {
-        return view ('Forms.Posts.conference');
+        if (Auth::user()-> is_admin ) {
+        return view ('AdminDashboard.Forms.Posts.conference');
+        }
+        else return view ('MembreDashboard.Forms.Posts.conference');
     }
 
     /**
@@ -49,7 +53,7 @@ class ConferenceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "annee"=>"in:2022",
+            "annee"=>"required",
             "titre"=>"required",
             "date"=>"",
             "file"=>"required|mimes:pdf,doc,docx|max:10000", 
@@ -70,7 +74,7 @@ class ConferenceController extends Controller
            $file = '--';
            }
             $conference = new Conference();
-            $conference->annee =$request->input('annee') ;
+            $conference->annee = $request->annee; ;
             $conference->titre =$request->titre ; 
             $conference->date =$request->date ;
             $conference->file =$file ;      
@@ -85,7 +89,19 @@ class ConferenceController extends Controller
     
     
     }
+    function deleteconference(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        Conference::find($request->id)->delete();
+        return back()
+            ->with('success', 'Conference deleted successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -103,9 +119,12 @@ class ConferenceController extends Controller
      * @param  \App\Models\Conference  $conference
      * @return \Illuminate\Http\Response
      */
-    public function edit(Conference $conference)
+    public function editConference($id)
     {
-        //
+        $conferences = Conference::find($id);
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editConference',compact('conferences'));}
+        else return view('MembreDashboard.UpdatedForms.editConference',compact('conferences'));
     }
 
     /**
@@ -117,7 +136,25 @@ class ConferenceController extends Controller
      */
     public function update(Request $request, Conference $conference)
     {
-        //
+        $id=$request->id;
+        $annee = $request->input('annee');
+        $titre = $request->input('titre');
+        $date = $request->input('date');
+        $auteur = $request->input('auteur');
+        $mail =$request->input('mail');
+        $auteurex = $request->input('auteurex');
+        $confname = $request->input('confname');
+        $class = $request->input('class');
+        $isUpdateSuccess= Conference::where('id',$id) ->update([ 'annee'=>$annee,
+                                                                'titre'=>$titre,
+                                                                'date'=>$date,
+                                                                'auteur'=>$auteur,
+                                                                'mail'=>$mail,
+                                                                'auteurex'=>$auteurex,
+                                                                'confname'=>$confname,
+                                                                'class'=>$class
+                                                            ]);
+        return redirect('postsManager')->with('status', 'Conference was updated');
     }
 
     /**

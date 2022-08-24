@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Pub;
 
 use App\Models\OuvrageSc;
+use App\Models\ArticleSc;
+use App\Models\Brevet;
+use App\Models\ChapitreOuv;
+use App\Models\Conference;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 class OuvrageScController extends Controller
 {
     /**
@@ -15,8 +20,11 @@ class OuvrageScController extends Controller
      */
     public function index()
     {
-        return view('Forms.Posts.ouvrage');
-    }
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.Forms.Posts.ouvrage');
+       
+    } else return view('MembreDashboard.Forms.Posts.ouvrage');
+}
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +58,7 @@ class OuvrageScController extends Controller
     public function store(Request $request)
     {
        $request->validate([
-        "annee"=>"in:2022",
+        "annee"=>"required",
         "auteur"=>"required",
         "mail"=>"required",
         "auteurex"=>"required",
@@ -64,7 +72,7 @@ class OuvrageScController extends Controller
        ]);
 
         $ouvrage = new OuvrageSc();
-        $ouvrage->annee =$request->input('annee') ;       
+        $ouvrage->annee = $request->annee; ;       
         $ouvrage->auteur =$request-> auteur;
         $ouvrage->mail=$request->mail ;
         $ouvrage->auteurex =$request->auteurex ;
@@ -80,7 +88,19 @@ class OuvrageScController extends Controller
 
 
     }
+    function deleteOuvrage(Request $request)
+    {
 
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        OuvrageSc::find($request->id)->delete();
+        return back()
+            ->with('success', 'Ouvrage deleted successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -89,8 +109,16 @@ class OuvrageScController extends Controller
      */
     public function show(OuvrageSc $ouvrageSc)
     {
-        
+        $articles = ArticleSc::all();
+        $brevets = Brevet :: all();
+        $chapitres = ChapitreOuv::all();
+        $conferences = Conference :: all();
+        $ouvrages = OuvrageSc :: all();
+        if (Auth::user()-> is_admin ) {
+        return View('AdminDashboard.Fonctionnalites.postsManager',compact('articles','brevets','chapitres','conferences','ouvrages'));
     }
+    else return View('MembreDashboard.Fonctionnalites.postsManager',compact('articles','brevets','chapitres','conferences','ouvrages'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -98,9 +126,12 @@ class OuvrageScController extends Controller
      * @param  \App\Models\OuvrageSc  $ouvrageSc
      * @return \Illuminate\Http\Response
      */
-    public function edit(OuvrageSc $ouvrageSc)
+    public function editOuvrage($id)
     {
-        //
+        $ouvrages = OuvrageSc::find($id);
+        if (Auth::user()-> is_admin ) {
+        return view('AdminDashboard.UpdatedForms.editOuv',compact('ouvrages'));}
+        else return view('MembreDashboard.UpdatedForms.editOuv',compact('ouvrages'));
     }
 
     /**
@@ -112,7 +143,31 @@ class OuvrageScController extends Controller
      */
     public function update(Request $request, OuvrageSc $ouvrageSc)
     {
-        //
+        $id=$request->id;
+        $annee = $request->input('annee');
+        $auteur = $request->input('auteur');
+        $mail = $request->input('mail');
+        $auteurex = $request->input('auteurex');
+        $mailex = $request->input('mailex');
+        $titre = $request->input('titre');
+        $editeur = $request->input('editeur');
+        $lien = $request->input('lien');
+        $edition = $request->input('edition');
+        $isbn = $request->input('isbn');
+        $date = $request->input('date');
+        $isUpdateSuccess= OuvrageSc::where('id',$id) ->update([   'annee'=>$annee,
+                                                                    'auteur'=>$auteur,
+                                                                    'mail'=>$mail,
+                                                                    'auteurex'=>$auteurex,
+                                                                    'mailex'=>$mailex,
+                                                                    'titre'=>$titre,
+                                                                    'editeur'=>$editeur,
+                                                                    'lien'=>$lien,
+                                                                    'edition'=>$edition,
+                                                                    'isbn'=>$isbn,
+                                                                    'date'=>$date,
+                                                            ]);
+        return redirect('postsManager')->with('status', 'Ouvrage was updated');
     }
 
     /**

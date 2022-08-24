@@ -14,7 +14,7 @@ class DomaineController extends Controller
      */
     public function index()
     {
-        return view('Forms.addDom');
+        return view('AdminDashboard.Forms.addDom');
     }
 
     /**
@@ -60,7 +60,7 @@ class DomaineController extends Controller
     {
         $domaines = Domaine::all();
 
-        return View('Fonctionnalites.domainManager',compact('domaines'));
+        return View('AdminDashboard.Fonctionnalites.domainManager',compact('domaines'));
     }
     function deleteDomaine(Request $request)
     {
@@ -85,7 +85,7 @@ class DomaineController extends Controller
     public function editDomain($id)
     {
         $domaines =Domaine::find($id);
-        return view('UpdatedForms.editDom',compact('domaines'));
+        return view('AdminDashboard.UpdatedForms.editDom',compact('domaines'));
     }
 
     /**

@@ -14,7 +14,7 @@ class ActualityController extends Controller
      */
     public function index()
     {
-        return view('Forms.addAct');
+        return view('AdminDashboard.Forms.addAct');
     }
 
     /**
@@ -58,7 +58,7 @@ class ActualityController extends Controller
     $act->image =$image;
     $act->description = $request->description;
     $act->save();
-    return redirect('actualityManager')->with('status', 'actuality was added');
+    return redirect('AdminDashboard.actualityManager')->with('status', 'actuality was added');
 
 
 
@@ -74,7 +74,7 @@ class ActualityController extends Controller
     {
         $actualities = Actuality::all();
 
-        return View('Fonctionnalites.actualityManager',compact('actualities'));
+        return View('AdminDashboard.Fonctionnalites.actualityManager',compact('actualities'));
     }
     function deleteActuality(Request $request)
     {
@@ -98,7 +98,7 @@ class ActualityController extends Controller
     public function editActuality($id)
     {
         $actualities = Actuality::find($id);
-        return view('UpdatedForms.editAct',compact('actualities'));
+        return view('AdminDashboard.UpdatedForms.editAct',compact('actualities'));
     }
 
     /**
