@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\These;
 use App\Models\Pfe;
 use App\Models\habilitation;
+use App\Models\Master;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class TheseController extends Controller
@@ -115,8 +116,9 @@ class TheseController extends Controller
         $theses = These::all();
         $pfes=Pfe::all();
         $habilitations = habilitation::all();
+        $masters = Master::all();
         if (Auth::user()-> is_admin ) {
-        return View('AdminDashboard.Fonctionnalites.productionManager',compact('theses','pfes','habilitations'));
+        return View('AdminDashboard.Fonctionnalites.productionManager',compact('theses','pfes','habilitations','masters'));
         } else return View('MembreDashboard.Fonctionnalites.productionManager',compact('theses','pfes','habilitations'));
     }
 

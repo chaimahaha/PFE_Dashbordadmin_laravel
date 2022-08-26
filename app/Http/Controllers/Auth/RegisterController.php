@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\File;
 class RegisterController extends Controller
 {
     /*
@@ -56,23 +56,23 @@ class RegisterController extends Controller
         return Validator::make($data, [
             "nom"=>"required",
             "prenom" => "required",
-            "cin" => "",
-            "numpassport"=>"",
-            "cnrps" =>"",
-            "gender" => "in:feminin,masculin",
+            "cin" => "nullable",
+            "numpassport"=>"nullable",
+            "cnrps" =>"nullable",
+            "gender" => "nullable|in:feminin,masculin",
             "grade"=>"in:Professeur,Maître de conférence,Docteur,Chercheur en thèse,Chercheur en mastère,Ingénieur,Assistant,Maître Assistant,Autre",
             "email"=>"required",
             "password"=>"required",
-            "photo" => "file|mimes:jpeg,png|max:5000",
-            "specialite"=>"",
-            "diplome"=>"",
-            "date" => "",
-            "fctadmin"=>"",
-            "scopus"=>"",
-            "orcid"=>"",
-            "tel"=>"",
-            "telfax"=>"",
-            "datediplome"=>"",
+            "photo" => "nullable|file|mimes:jpeg,png|max:5000",
+            "specialite"=>"nullable",
+            "diplome"=>"nullable",
+            "date" => "nullable",
+            "fctadmin"=>"nullable",
+            "scopus"=>"nullable",
+            "orcid"=>"nullable",
+            "tel"=>"nullable",
+            "telfax"=>"nullable",
+            "datediplome"=>"nullable",
         ]);
     }
         public function store(Request $request)
@@ -107,6 +107,8 @@ class RegisterController extends Controller
         $user->telfax = $request->telfax;
         $user->datediplome = $request -> datediplome;
         $user->save();
+        if($user->is_admin) return back()-> with('status','Vous avez ajouter un nouveau membre');
+        else
         $this->guard()->login($user);
         
         return redirect('membreHome')->with('status', 'Welcome Membre');
@@ -163,11 +165,11 @@ class RegisterController extends Controller
             'id' => "required",
         ]);
         if ($validator->fails()) {
-            return redirect()->redirect()->withInput()->withErrors($validator->errors());
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
         User::find($request->id)->delete();
-        return redirect()
-            ->with('success', 'user deleted successfully');
+        return back()
+            ->with('status', 'User deleted successfully');
     }
     function editUser($id){
         $users = User::find($id);
@@ -187,6 +189,19 @@ class RegisterController extends Controller
         $gender = $request->input('gender');
         $grade = $request-> input('grade');
         $email = $request->input('email');
+        if($request->hasFile('photo'))
+        {   $path = public_path().'/user_image';
+            if(File::exists($path)){
+                File::delete($path);
+                }
+                else $photo=$request->photo;
+            $file=$request->file('photo');
+            $extention=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extention;
+            $file->move($path,$filename);
+            $photo=$request->input('filename');
+        }
+        
         $specialite= $request->input('specialite');
         $diplome= $request-> input('diplome');
         $date = $request->input('date');
@@ -204,6 +219,7 @@ class RegisterController extends Controller
                                                                 'gender'=>$gender,
                                                                 'grade'=>$grade,
                                                                 'email'=>$email,
+                                                                'photo'=>$filename,
                                                                 'specialite'=>$specialite,
                                                                 'diplome'=>$diplome,
                                                                 'date'=>$date,
@@ -215,7 +231,7 @@ class RegisterController extends Controller
                                                                 'datediplome'=>$datediplome  ,
                                                             ]);
         if(Auth::user()->is_admin)
-            return redirect('userManager')->with('status', 'user was updated');
+            return redirect('profil')->with('status', 'user was updated');
         else return redirect('profil')->with('status','Your profile undergone some modifications');
     }
 public function index (){

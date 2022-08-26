@@ -4,19 +4,6 @@ Editer Membre {{$users->id}}
 @endsection
 @section('content')
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-8">
-                    <h4 class="fw-bold py-3 mb-4" >
-                    <span class="text-muted fw-light">Fonctionnalités </span>
-                    <span class="text-muted fw-light" > /</span>
-                    <a  class="text-muted fw-light" href="membreManager"> Gestion des utilisateurs </a>
-                    <span class="text-muted fw-light" > /</span> Editer membre</h4>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
     <div class="container ">
         <div class="card mt-3 border-dark  " >
             <div class="card-header text-center ">
@@ -95,9 +82,13 @@ Editer Membre {{$users->id}}
                 <span class="obligatoryFieldMark">*</span>
                 <input type="text" name="email" class="form-control mt-2" placeholder="Votre E-mail" value={{$users->email}} >
             </div><br>
-                                          
+            <div class="col-sm-12 form-group">
+                <label class="fw-bold">Photo (Image JPG/PNG, Taille maximale: 1024 ko)</label>
+                <input type="file" name="photo" class="form-control mt-2" >
+                <img src="{{url('user_image/'.$users->photo)}} "alt="..." style="border-radius: 50%" width="70px" height="70px">
+            </div>                             
         <div class="row">
-            <div class="col-sm-6 form-group"><br>
+            <div class="col-sm-12 form-group"><br>
                 <label class="fw-bold">Spécialité</label>
                 <input type="text" name="specialite" placeholder="Enter Designation Here.." class="form-control mt-2"  value={{$users->specialite}}  >
             </div>

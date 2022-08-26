@@ -44,6 +44,9 @@
     <script src="../assets/js/config.js"></script>
     <script src="../assets/js/scripts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    @yield('script')
   </head>
   <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -209,7 +212,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a class="dropdown-item" href="/">
+                      <a class="dropdown-item" href="/profil">
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">

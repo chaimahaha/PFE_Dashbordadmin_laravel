@@ -21,6 +21,10 @@ ABOUT ME
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span>{{Auth::user()->email}}</li>
                                     <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Telephone:</span> {{Auth::user()->tel}}</li>
                                 </ul>
+                                <div class="col-3">
+                                    <a class="dropdown-item btn btn-info" href="{{url('/edit-user'.Auth::user()->id)}}"
+                                        ><i class="bx bx-edit-alt me-1 "></i> Edit</a>
+                                    </div>
                             </div>
                         </div>
                     </div>

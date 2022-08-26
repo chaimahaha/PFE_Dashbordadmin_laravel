@@ -95,7 +95,11 @@ Editer Membre {{$users->id}}
                 <span class="obligatoryFieldMark">*</span>
                 <input type="text" name="email" class="form-control mt-2" placeholder="Votre E-mail" value={{$users->email}} >
             </div><br>
-                                          
+            <div class="col-sm-12 form-group">
+                <label class="fw-bold">Photo (Image JPG/PNG, Taille maximale: 1024 ko)</label>
+                <input type="file" name="photo" class="form-control mt-2" data-id="{{$users->photo}}">
+                <img src="{{url('user_image/'.$users->photo)}} "alt="..." style="border-radius: 50%" width="70px" height="70px">
+            </div>              
         <div class="row">
             <div class="col-sm-6 form-group"><br>
                 <label class="fw-bold">Spécialité</label>

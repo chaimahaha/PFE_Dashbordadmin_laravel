@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Boolean;
-
+use Spatie\Permission\Traits\HasRoles;
 class EnsureUserHasRole
 {
     /**
@@ -16,9 +16,13 @@ class EnsureUserHasRole
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, string $is_admin)
-    {
-        if($request->user()->is_admin===$is_admin) return $next($request);
-        abort(403);
+    public function handle(Request $request, Closure $next)
+    {  
+       
+        if (Auth::check()  &&  Auth::user()->is_admin == 1) {
+            return $next($request);
+   }
+   abort(403);
     }
-}
+    }
+

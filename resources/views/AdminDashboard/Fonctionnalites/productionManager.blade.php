@@ -24,13 +24,16 @@
           <div class="card-header fw-bold">
             <ul class="nav  card-header-tabs justify-content-center" >
               <li class="nav-item " id="paper">
-                <button class="btn btn-outline-success mx-2" id="show_article" ><a class="nav-link " aria-current="true" href="these">Thèse</a></button> 
+                <button class="btn btn-outline-success mx-2" ><a class="nav-link " aria-current="true" href="these">Thèse</a></button> 
               </li>
               <li class="nav-item " id="paper">
-                <button class="btn btn-outline-success mx-2" id="show_ouvrage" ><a class="nav-link " href="hab" >Habilitation</a></button>
+                <button class="btn btn-outline-success mx-2"  ><a class="nav-link " href="hab" >Habilitation</a></button>
               </li>
               <li class="nav-item " id="paper">
-                <button class="btn btn-outline-success mx-2" id="show_chapitre" ><a class="nav-link " href="pfe">PFE</a></button> 
+                <button class="btn btn-outline-success mx-2"  ><a class="nav-link " href="pfe">PFE</a></button> 
+              </li>
+              <li class="nav-item " id="paper">
+                <button class="btn btn-outline-success mx-2" ><a class="nav-link " href="master">Master </a></button> 
               </li>
             </ul>
           </div>

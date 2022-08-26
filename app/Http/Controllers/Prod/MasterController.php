@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Prod;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Pfe;
+use App\Models\Master;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-class PfeController extends Controller
+use App\Http\Controllers\Controller;
+class MasterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class PfeController extends Controller
     public function index()
     {
         if (Auth::user()-> is_admin ) 
-        return view('AdminDashboard.Forms.Products.pfe');
-        else return view('MembreDashboard.Forms.Products.pfe');
+        return view('AdminDashboard.Forms.Products.master');
+        else return view('MembreDashboard.Forms.Products.master');
     }
 
     /**
@@ -27,7 +27,7 @@ class PfeController extends Controller
      */
     public function create(array $data)
     {
-        return Pfe::create([
+        return Master::create([
             'titre'=>$data['titre'],
             'file'=>$data['file'],
             'description'=>$data['description'],
@@ -67,28 +67,28 @@ class PfeController extends Controller
         if($request->hasfile('file'))
             {
                 $filename = uniqid() . '_' . time(). '.' . $request->file->extension();
-                $path = public_path() .'/PFE_file';
+                $path = public_path() .'/Master_file';
                 $request->file->move($path, $filename);
                 $file = $filename;
             }else{
             $file = '--';
             }
-        $pfe= new Pfe();
-        $pfe->titre = $request->titre;
-        $pfe->file = $file;
-        $pfe->description = $request->description;
-        $pfe-> encadrant = $request->encadrant ;
-        $pfe-> mail_encadrant = $request-> mail_encadrant;
-        $pfe-> encadrant_2 = $request-> encadrant_2;
-        $pfe-> mail_encadrant_2= $request->mail_encadrant_2;
-        $pfe-> institut= $request->institut;
-        $pfe-> etudiant = $request->etudiant;
-        $pfe->date_start = $request->date_start;
-        $pfe-> date_end= $request->date_end;
-        $pfe->save();
-        return redirect('pfe')->with('status', 'PFE was created');
+        $master= new Master();
+        $master->titre = $request->titre;
+        $master->file = $file;
+        $master->description = $request->description;
+        $master-> encadrant = $request->encadrant ;
+        $master-> mail_encadrant = $request-> mail_encadrant;
+        $master-> encadrant_2 = $request-> encadrant_2;
+        $master-> mail_encadrant_2= $request->mail_encadrant_2;
+        $master-> institut= $request->institut;
+        $master-> etudiant = $request->etudiant;
+        $master->date_start = $request->date_start;
+        $master-> date_end= $request->date_end;
+        $master->save();
+        return redirect('master')->with('status', 'Master was created');
     }
-    function deletePfe(Request $request)
+    function deleteMaster(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -97,17 +97,17 @@ class PfeController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
-        Pfe::find($request->id)->delete();
+        Master::find($request->id)->delete();
         return back()
-            ->with('success', 'PFE deleted successfully');
+            ->with('success', 'Master deleted successfully');
     }
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pfe  $pfe
+     * @param  \App\Models\Master  $Master
      * @return \Illuminate\Http\Response
      */
-    public function show(Pfe $pfe)
+    public function show(Master $Master)
     {
         //
     }
@@ -115,15 +115,15 @@ class PfeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pfe  $pfe
+     * @param  \App\Models\Master  $Master
      * @return \Illuminate\Http\Response
      */
-    public function editPfe($id)
+    public function editMaster($id)
     {
-         $pfes = Pfe::find($id);
+         $masters = Master::find($id);
          if (Auth::user()-> is_admin ) {
-        return view('AdminDashboard.UpdatedForms.editpfe',compact('pfes'));
-         } else return view('MembreDashboard.UpdatedForms.editpfe',compact('pfes'));
+        return view('AdminDashboard.UpdatedForms.editMaster',compact('masters'));
+         } else return view('MembreDashboard.UpdatedForms.editMaster',compact('masters'));
 
     }
 
@@ -131,10 +131,10 @@ class PfeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pfe  $pfe
+     * @param  \App\Models\Master  $Master
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pfe $pfe)
+    public function update(Request $request, Master $Master)
     {
         $id=$request->id;
         $titre = $request->input('titre');
@@ -147,7 +147,7 @@ class PfeController extends Controller
         $etudiant=$request->input('etudiant');
         $date_start=$request->input('date_start');
         $date_end=$request->input('date_end');
-        $isUpdateSuccess= Pfe::where('id',$id) ->update([   'titre'=>$titre,
+        $isUpdateSuccess= Master::where('id',$id) ->update([   'titre'=>$titre,
                                                             'description'=>$description,
                                                             'encadrant'=>$encadrant,
                                                             'mail_encadrant'=>$mail_encadrant,
@@ -158,16 +158,16 @@ class PfeController extends Controller
                                                             'date_start'=>$date_start,
                                                             'date_end'=>$date_end,
                                                             ]);
-        return redirect('productionManager')->with('status', 'PFE was updated');
+        return redirect('productionManager')->with('status', 'Master was updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pfe  $pfe
+     * @param  \App\Models\Master  $Master
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pfe $pfe)
+    public function destroy(Master $Master)
     {
         //
     }
