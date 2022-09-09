@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('masters', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
+            $table->string('annee');
             $table->string('file');
             $table->string('description');
             $table->string('encadrant');

@@ -17,7 +17,7 @@
         <div class="form-group">
             <label class="fw-bold">Année</label>
             <span class="obligatoryFieldMark">*</span>
-            <input type="text" class="form-control mt-2" name="annee" value="Année">
+            <input type="text" class="form-control mt-2" name="annee" placeholder="Année">
         </div><br>
 
         <div class="form-group">
@@ -35,7 +35,7 @@
         <div class="form-group">
           <label class="fw-bold">Année de la première inscription</label>
           <span class="obligatoryFieldMark">*</span>
-          <input type="text" class="form-control mt-2" name="anneeinscrip" value="Année d'incription">
+          <input type="text" class="form-control mt-2" name="anneeinscrip" placeholder="Année d'incription">
         </div><br>
 
         <div class="form-group">

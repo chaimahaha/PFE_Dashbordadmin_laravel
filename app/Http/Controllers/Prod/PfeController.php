@@ -29,6 +29,7 @@ class PfeController extends Controller
     {
         return Pfe::create([
             'titre'=>$data['titre'],
+            'annee'=>$data['annee'],
             'file'=>$data['file'],
             'description'=>$data['description'],
             'encadrant'=>$data['encadrant'],
@@ -52,6 +53,7 @@ class PfeController extends Controller
     {
         $request ->validate([
             "titre" => "required",
+            "annee"=>"required",
             "file" => "required|mimes:pdf|max:10000",
             "description"=>"required",
             "encadrant"=>"required",
@@ -75,6 +77,7 @@ class PfeController extends Controller
             }
         $pfe= new Pfe();
         $pfe->titre = $request->titre;
+        $pfe->annee = $request->annee;
         $pfe->file = $file;
         $pfe->description = $request->description;
         $pfe-> encadrant = $request->encadrant ;
@@ -138,6 +141,7 @@ class PfeController extends Controller
     {
         $id=$request->id;
         $titre = $request->input('titre');
+        $annee = $request->input('annee');
         $description = $request->input('description');
         $encadrant = $request->input('encadrant');
         $mail_encadrant = $request->input('mail_encadrant');
@@ -148,6 +152,7 @@ class PfeController extends Controller
         $date_start=$request->input('date_start');
         $date_end=$request->input('date_end');
         $isUpdateSuccess= Pfe::where('id',$id) ->update([   'titre'=>$titre,
+                                                            'annee'=>$annee,
                                                             'description'=>$description,
                                                             'encadrant'=>$encadrant,
                                                             'mail_encadrant'=>$mail_encadrant,

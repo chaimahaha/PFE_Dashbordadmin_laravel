@@ -9,7 +9,6 @@
       <div class="col-sm-10 mt-3 mx-2">
         <h1>Création Conférence</h1>
         <legend><span><i class="bi bi-file-earmark-fill"></i>Informations conférence :</span></legend> 
-        <hr>
         <div class="row">
           <div class="col-sm-6 form-group">
             <label class="fw-bold">Année</label>
@@ -35,7 +34,6 @@
             </div><br>
             </div><br>
             <legend><span><i class="bi bi-person-fill"></i> Auteur(s) Interne:</span></legend>   
-            <hr>
             <div class="from-group">
               <div id="auteur_conference">
                 <div class="row">
@@ -54,7 +52,6 @@
               </div>              
               <br>
               <legend><span><i class="bi bi-person-fill"></i> Auteur(s) Externe : </span></legend>   
-              <hr>
               <div class="from-group">
                 <div id="conference_externe">
                   <div class="row">
@@ -73,7 +70,6 @@
               </div>
               <br>
               <legend><span> <i class="bi bi-book-fill"></i> Informations conférence : </span> </legend>   
-              <hr>
               <div class="form-group"><br>
                 <label class="control-label fw-bold">Conference name</label>
                 <span class="obligatoryFieldMark">*</span>

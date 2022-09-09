@@ -16,6 +16,11 @@ Editer Master {{$masters->id}}
             <input type="text" name="titre" class="form-control mt-2" placeholder="Titre" value={{$masters->titre}}>
           </div><br>
           <div class="form-group">
+            <label class="fw-bold">Année</label>
+            <span class="obligatoryFieldMark">*</span>
+            <input type="text" class="form-control mt-2" name="annee" placeholder="Année" value={{$masters->annee}}>
+        </div><br>
+          <div class="form-group">
             <label class="fw-bold">Description</label>
             <textarea name="description" class="form-control mt-2" cols="20" rows="5">{{$masters->description}}</textarea>
           </div><br>

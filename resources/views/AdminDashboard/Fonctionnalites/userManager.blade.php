@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des users</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des utilisateurs</h4>
   <div class="card">
     <h5 class="card-header">Membres</h5>
     <div class="table-responsive text-nowrap">
@@ -12,7 +12,7 @@
         <thead>
           <tr class="table-ligh text-center">
             <th>id</th>
-            <th class="col-12 ">Informations & Actions</th>
+            <th class="col-12 text-justify">Informations & Actions</th>
           </tr>
         </thead>
             <tbody class="table-border-bottom-0">

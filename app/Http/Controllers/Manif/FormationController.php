@@ -66,7 +66,7 @@ class FormationController extends Controller
         $forma->date_start = $request->date_start;
         $forma->date_end = $request->date_end;
         $forma->save();
-        return redirect('AdminDashboard.manifestationManager')->with('status', 'Training was created');
+        return redirect('manifestationManager')->with('status', 'Training was created');
        
     }
     function deleteFormation(Request $request)

@@ -27,7 +27,7 @@
                   <input type="text" name="annee" class="form-control mt-2 " placeholder="Année">
               </div><br>
                                     
-              <div class="col-sm-6 form-group">
+              <div class="col-sm-12 form-group">
                 <label class="fw-bold">Fichier (PDF, Taille maximale: 1024 ko)</label>
                 <input type="file" name="file" class="form-control mt-2" >
               </div><br>

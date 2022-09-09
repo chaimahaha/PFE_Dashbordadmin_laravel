@@ -91,14 +91,14 @@
                     <div data-i18n="Account">Profile</div>
                   </a>
                 </li>
-                <!--<li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
-                    <div data-i18n="Notifications">Notifications</div>
-                  </a>
-                </li>-->
               </ul>
             </li>
-            
+            <li class="menu-item">
+              <a href="envoiemessage" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-message-square-dots" ></i>
+                <div data-i18n="Account Settings">Messages</div>
+              </a>
+            </li>
             <!-- Forms & Tables -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Ajout &amp; Edit &amp; Supprime</span></li>
             <!-- Tables -->
@@ -200,7 +200,7 @@
                           </div>
                           <div class="flex-grow-1">
                             <span class="fw-semibold d-block">{{Auth::user()->prenom ??  route('logout')}}</span>
-                            <small class="text-muted">Admin</small>
+                            <small class="text-muted">Membre</small>
                           </div>
                         </div>
                       </a>

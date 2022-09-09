@@ -14,8 +14,12 @@
             <span class="obligatoryFieldMark">*</span>
             <input type="text" name="titre" class="form-control mt-2" placeholder="Titre">
           </div><br>
-    
-          <div class="col-sm-6 form-group">
+          <div class="form-group">
+            <label class="fw-bold">Année</label>
+            <span class="obligatoryFieldMark">*</span>
+            <input type="text" class="form-control mt-2" name="annee" placeholder="Année">
+        </div><br>
+          <div class="col-sm-12 form-group">
             <label class="fw-bold">Fichier (PDF)</label>
             <input type="file" name="file" class="form-control mt-4" >
           </div><br>

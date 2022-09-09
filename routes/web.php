@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('login', function () { return view('auth.login');});
+Route::get('/login', function () { return view('auth.login');});
 Auth::routes();
 Route::post('register-form', [App\Http\Controllers\Auth\RegisterController::class, 'store'])->name('register.form');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::middleware(['auth'])->group(function () {
     /**************************************************************************** */
+   
     Route::get('article',[App\Http\Controllers\Pub\ArticleScController::class, 'index']);
     Route::post('/store-art',[App\Http\Controllers\Pub\ArticleScController::class, 'store']);
     Route::get('/delete-art',[App\Http\Controllers\Pub\ArticleScController::class,'deleteArticle']);
@@ -92,21 +94,20 @@ Route::middleware(['auth'])->group(function () {
     Route::put('update-user{id}',[App\Http\Controllers\Auth\RegisterController::class, 'update']);
     /************************************************************************ */
     Route::get('membreHome',function(){ return view ('MembreDashboard.Fonctionnalites.home'); });
+    Route::get('envoiemessage',[App\Http\Controllers\MessagerieController::class, 'show']);
+    Route::post('/store-msg',[App\Http\Controllers\MessagerieController::class, 'store']);
 });
 Route::group(['middleware' => ['is_admin']], function () {
-    Route::get('/',[App\Http\Controllers\Charts::class, 'userCharts']);
+    Route::get('/dash',[App\Http\Controllers\Charts::class, 'userCharts']);
+    Route::get('/pie',[App\Http\Controllers\Charts::class, 'pieChart']);
+    Route::get('message',[App\Http\Controllers\MessagerieController::class, 'show']);
     Route::get('userManager', [App\Http\Controllers\Auth\RegisterController::class, 'show'])->name('userManager');
     Route::get('adduser',[App\Http\Controllers\Auth\RegisterController::class, 'index']);
     Route::get('/delete-user',[App\Http\Controllers\Auth\RegisterController::class,'deleteUser']);
     
     Route::put("defineadmin/{id}",[App\Http\Controllers\Auth\RegisterController::class, 'defineAdmin']);
     Route::put('retireadmin/{id}',[App\Http\Controllers\Auth\RegisterController::class, 'retireAdmin']);
-    /*
-    Route::post('/store-mem',[App\Http\Controllers\MembreController::class, 'store']);
-    Route::get('/delete-mem',[App\Http\Controllers\MembreController::class,'deleteMembre']);
-    Route::get('/edit-mem{id}',[App\Http\Controllers\MembreController::class, 'editMembre']);
-    Route::put('update-mem{id}',[App\Http\Controllers\MembreController::class, 'update']);*/
-   /******************************************************************************* */
+   
     /******************************************************************************************** */
     Route::get('addform', [App\Http\Controllers\Manif\FormationController::class, 'index']);
     Route::post('store-forma', [App\Http\Controllers\Manif\FormationController::class, 'store']);

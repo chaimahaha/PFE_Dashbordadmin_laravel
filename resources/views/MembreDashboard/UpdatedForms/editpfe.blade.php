@@ -16,6 +16,11 @@ Editer PFE {{$pfes->id}}
             <input type="text" name="titre" class="form-control mt-2" placeholder="Titre" value={{$pfes->titre}}>
           </div><br>
           <div class="form-group">
+            <label class="fw-bold">Année</label>
+            <span class="obligatoryFieldMark">*</span>
+            <input type="text" class="form-control mt-2" name="annee" placeholder="Année" value={{$pfes->annee}}>
+        </div><br>
+          <div class="form-group">
             <label class="fw-bold">Description</label>
             <textarea name="description" class="form-control mt-2" cols="20" rows="5">{{$pfes->description}}"</textarea>
           </div><br>

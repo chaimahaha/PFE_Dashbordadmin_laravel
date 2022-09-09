@@ -27,7 +27,7 @@ class LoginController extends Controller
     {
       $user=Auth::user();
         if ( $user->is_admin ) {
-            return redirect('/');
+            return redirect('/dash');
         }
     
         return redirect('membreHome');

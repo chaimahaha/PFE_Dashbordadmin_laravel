@@ -29,6 +29,7 @@ class MasterController extends Controller
     {
         return Master::create([
             'titre'=>$data['titre'],
+            'annee'=>$data['annee'],
             'file'=>$data['file'],
             'description'=>$data['description'],
             'encadrant'=>$data['encadrant'],
@@ -52,6 +53,7 @@ class MasterController extends Controller
     {
         $request ->validate([
             "titre" => "required",
+            "annee"=>"required",
             "file" => "required|mimes:pdf|max:10000",
             "description"=>"required",
             "encadrant"=>"required",
@@ -75,6 +77,7 @@ class MasterController extends Controller
             }
         $master= new Master();
         $master->titre = $request->titre;
+        $master->annee = $request->annee;
         $master->file = $file;
         $master->description = $request->description;
         $master-> encadrant = $request->encadrant ;
@@ -138,6 +141,7 @@ class MasterController extends Controller
     {
         $id=$request->id;
         $titre = $request->input('titre');
+        $annee = $request->input('annee');
         $description = $request->input('description');
         $encadrant = $request->input('encadrant');
         $mail_encadrant = $request->input('mail_encadrant');
@@ -148,6 +152,7 @@ class MasterController extends Controller
         $date_start=$request->input('date_start');
         $date_end=$request->input('date_end');
         $isUpdateSuccess= Master::where('id',$id) ->update([   'titre'=>$titre,
+                                                            'annee'=>$annee,
                                                             'description'=>$description,
                                                             'encadrant'=>$encadrant,
                                                             'mail_encadrant'=>$mail_encadrant,
