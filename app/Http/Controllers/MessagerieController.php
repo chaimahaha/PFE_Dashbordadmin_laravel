@@ -6,6 +6,7 @@ use App\Models\Messagerie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 class MessagerieController extends Controller
 {
     /**
@@ -74,6 +75,19 @@ class MessagerieController extends Controller
     public function edit(Messagerie $messagerie)
     {
         //
+    }
+    function deleteMsg(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'id' => "required",
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        Messagerie::find($request->id)->delete();
+        return back()
+            ->with('success', 'Message deleted successfully');
     }
 
     /**

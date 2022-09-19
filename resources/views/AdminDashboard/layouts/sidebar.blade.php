@@ -48,6 +48,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    @livewireStyles
   </head>
   <body>
     <style>
@@ -239,18 +240,7 @@ input[type="number"] {
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
-              <div class="navbar-nav align-items-center">
-                <div class="nav-item d-flex align-items-center">
-                  <i class="bx bx-search fs-4 lh-0"></i>
-                  <input
-                    type="text"
-                    class="form-control border-0 shadow-none"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                    wire:model.debounce.350ms="search"
-                  />
-                </div>
-              </div>
+              <livewire:search />
               <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">

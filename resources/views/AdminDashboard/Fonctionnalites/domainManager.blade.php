@@ -42,7 +42,6 @@
                                   </div>
                                   <p class="text-muted text-sm mt-1"><b> {{$dom->description}}</b></p>
                                 </div>
-                                
                           </div>
                         </div>
                         </div>

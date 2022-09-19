@@ -13,14 +13,18 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('vitrin');
+
+Route::get('manif', [App\Http\Controllers\VitrinController::class, 'showManif'])->name('manif');
+Route::get('actualites', [App\Http\Controllers\VitrinController::class, 'showActuality'])->name('actualites');
+Route::get('prodcop', [App\Http\Controllers\VitrinController::class, 'showProd'])->name('prodcop');
+Route::get('pub', [App\Http\Controllers\VitrinController::class, 'showPub'])->name('pub');
+Route::get('theme', [App\Http\Controllers\VitrinController::class, 'show'])->name('theme');
 Route::get('/login', function () { return view('auth.login');});
 Auth::routes();
 Route::post('register-form', [App\Http\Controllers\Auth\RegisterController::class, 'store'])->name('register.form');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::middleware(['auth'])->group(function () {
     /**************************************************************************** */
-   
     Route::get('article',[App\Http\Controllers\Pub\ArticleScController::class, 'index']);
     Route::post('/store-art',[App\Http\Controllers\Pub\ArticleScController::class, 'store']);
     Route::get('/delete-art',[App\Http\Controllers\Pub\ArticleScController::class,'deleteArticle']);
@@ -101,6 +105,7 @@ Route::group(['middleware' => ['is_admin']], function () {
     Route::get('/dash',[App\Http\Controllers\Charts::class, 'userCharts']);
     Route::get('/pie',[App\Http\Controllers\Charts::class, 'pieChart']);
     Route::get('message',[App\Http\Controllers\MessagerieController::class, 'show']);
+    Route::get('deletemsg',[App\Http\Controllers\MessagerieController::class, 'deleteMsg']);
     Route::get('userManager', [App\Http\Controllers\Auth\RegisterController::class, 'show'])->name('userManager');
     Route::get('adduser',[App\Http\Controllers\Auth\RegisterController::class, 'index']);
     Route::get('/delete-user',[App\Http\Controllers\Auth\RegisterController::class,'deleteUser']);

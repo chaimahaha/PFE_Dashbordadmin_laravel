@@ -58,7 +58,7 @@ class ActualityController extends Controller
     $act->image =$image;
     $act->description = $request->description;
     $act->save();
-    return redirect('AdminDashboard.actualityManager')->with('status', 'actuality was added');
+    return redirect('actualityManager')->with('status', 'actuality was added');
 
 
 

@@ -7,10 +7,24 @@ use Livewire\Component;
 class Search extends Component
 {
     public $search='';
+    
+    public function updatedSearch()
+    {
+        
+    }
+
+    
+    public $users=[];
     public function render()
     {
-        $result=[];
-        $result=User::where('id','nom','prenom',$this->$search)->get();
-        return view('livewire.search');
+        $words = '%'. $this->search . '%';
+
+        if(strlen($this->search) >= 2)
+        { $this->users = User::where('nom', 'LIKE', $words)
+        ->orWhere('prenom','LIKE',$words)
+        ->get();
+        }
+        return view('livewire.search', ['users'=>$this->users]);
     }
 }
+

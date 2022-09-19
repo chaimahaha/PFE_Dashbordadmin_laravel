@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('id_user')->unsigned();
             $table->string('msg');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

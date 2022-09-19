@@ -140,6 +140,7 @@ class CooperationController extends Controller
         $date_end =$request->input('date_end');
         $isUpdateSuccess= Cooperation::where('id',$id) ->update([   'type'=>$type,
                                                                     'intervenantnat'=>$intervenantnat,
+                                                                    'intervenantin'=>$intervenantin,
                                                                     'sujet'=>$sujet,
                                                                     'institution'=>$institution,
                                                                     'date_start'=>$date_start,
