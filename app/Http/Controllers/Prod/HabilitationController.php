@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\habilitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class HabilitationController extends Controller
 {
     /**
@@ -14,11 +15,15 @@ class HabilitationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         if (Auth::user()-> is_admin ) {
-        return view('AdminDashboard.Forms.Products.habilitation');
+            $habilitations=DB::table('habilitations')->paginate(3);
+        return view('AdminDashboard.Forms.Products.habilitation',compact('habilitations'));
     }
-    else return view ('MembreDashboard.Forms.Products.habilitation');
+    else
+    $habilitations=DB::table('habilitations')->paginate(3);
+    //->where('id',Auth::user()->id)
+    return view ('MembreDashboard.Forms.Products.habilitation',compact('habilitations'));
 }
 
     /**

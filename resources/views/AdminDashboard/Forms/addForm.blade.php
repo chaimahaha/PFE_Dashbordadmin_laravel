@@ -26,6 +26,15 @@
             <div class="card-body text-dark">
                 <form action='store-forma' method="post" enctype="multipart/form-data">
                   @csrf
+                  @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
                     <div class="col-sm-10 mt-3 mx-1">
                         <h1>Création formation</h1>
                         <hr>

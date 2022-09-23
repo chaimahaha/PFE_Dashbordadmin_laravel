@@ -6,6 +6,7 @@ use App\Models\Master;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 class MasterController extends Controller
 {
     /**
@@ -14,10 +15,11 @@ class MasterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
+        $masters=DB::table('masters')->paginate(3);
         if (Auth::user()-> is_admin ) 
-        return view('AdminDashboard.Forms.Products.master');
-        else return view('MembreDashboard.Forms.Products.master');
+        return view('AdminDashboard.Forms.Products.master',compact('masters'));
+        else return view('MembreDashboard.Forms.Products.master',compact('masters'));
     }
 
     /**

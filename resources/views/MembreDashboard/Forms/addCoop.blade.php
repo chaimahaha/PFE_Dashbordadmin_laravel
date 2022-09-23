@@ -25,6 +25,15 @@
             <div class="card-body text-dark">
                 <form action="/store-coop" method="post" enctype="multipart/form-data">
                   {{ csrf_field() }}
+                  @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
                     <div class="col-sm-10 mt-3 mx-1">
                         <h1>Création coopération</h1>
                         <hr>

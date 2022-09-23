@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class ConferenceController extends Controller
 {
     /**
@@ -16,10 +17,11 @@ class ConferenceController extends Controller
      */
     public function index()
     {
+        $conferences=DB::table('conferences')->paginate(3);
         if (Auth::user()-> is_admin ) {
-        return view ('AdminDashboard.Forms.Posts.conference');
+        return view ('AdminDashboard.Forms.Posts.conference',compact('conferences'));
         }
-        else return view ('MembreDashboard.Forms.Posts.conference');
+        else return view ('MembreDashboard.Forms.Posts.conference',compact('conferences'));
     }
 
     /**
@@ -73,18 +75,26 @@ class ConferenceController extends Controller
            }else{
            $file = '--';
            }
+           //$count = count($request->auteur);
+          // $count2 = count($request->auteurex);
+
             $conference = new Conference();
             $conference->annee = $request->annee; ;
             $conference->titre =$request->titre ; 
             $conference->date =$request->date ;
-            $conference->file =$file ;      
+            $conference->file =$file ; 
+            //for ($i=0; $i < $count; $i++) {      
             $conference->auteur =$request-> auteur;
             $conference->mail=$request->mail ;
+            //}
+            //for ($i=0; $i < $count2; $i++) { 
             $conference->auteurex =$request->auteurex ;
             $conference->mailex=$request->mailex ;
+            //}
             $conference->confname =$request-> confname;
             $conference->class = $request->input('class');
             $conference->save();
+            
             return redirect('conference')->with('status', 'conference was created');
     
     

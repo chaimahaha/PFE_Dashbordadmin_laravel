@@ -28,6 +28,15 @@
         <div class="col mt-2 me-2">  
 <form action="{{ route('register.form') }}" name="register-form" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
+    @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
 
     <div class="col-sm-10 mt-3 mx-2">
         <div class="row">

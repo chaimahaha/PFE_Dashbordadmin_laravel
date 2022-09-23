@@ -4,8 +4,54 @@
 @endsection
 @section('products')
 <div id="these" >
-    <form action="/store-these" method="post" enctype="multipart/form-data">
+  <div class="container">
+    <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown">
+      <div class="card-header text-center fw-bold fs-4" style="color:#22577E">Théses</div>
+        <div class="card-body wow fadeInDown ">
+          <div class="table-responsive table" id="search" >
+            <table id="paper_table" class="table table-striped" >
+              <thead  class="table-success  ">
+                <tr>
+                    <th >#</th>
+                    <th>Titre</th>
+                    <th>Année</th>
+                    <th>Sujet</th>
+                    <th>Année d'inscription</th>
+                    <th>Encadrants</th>
+                    <th>Cotutelle</th>                                       
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                @foreach($theses as $these)
+                <tr>
+                      <td> {{$these->id}} </td>
+                      <td> {{$these->titre}} </td>
+                      <td> {{$these->annee}} </td>
+                      <td>{{$these->sujet}}</td>
+                      <td> {{$these->anneeinscrip}} </td>
+                      <td> {{$these->encadrant}},{{$these->encadrant_2}} </td>
+                      <td> {{$these->cotutelle}} </td>
+                </tr>
+                @endforeach     
+              </tbody>
+            </table>
+            {{ $theses->onEachSide(5)->links() }}
+          </div>
+        </div>
+      </div>  
+    </div>
+    <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown">
+      <form action="/store-these" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
+      @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
       <div class="col-sm-10 mt-3 mx-2">
         <h1>Thèse</h1>
         <hr>
@@ -83,8 +129,9 @@
           <button type="submit" class="btn btn-outline-success mb-3 w-25" value="upload" id="submit" name="submit">Submit</button>	
         </div>  
       </div>
-  </form>
-    
+      </form>
+    </div>
+  </div>
 </div>
 @endsection
 

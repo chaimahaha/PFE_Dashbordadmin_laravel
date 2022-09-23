@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class ArticleScController extends Controller
 {
     /**
@@ -16,9 +17,10 @@ class ArticleScController extends Controller
      */
     public function index()
     {
+        $articles =DB::table('article_scs')->paginate(3);
         if (Auth::user()-> is_admin ) {
-       return view('AdminDashboard.Forms.Posts.article');}
-       else return view('MembreDashboard.Forms.Posts.article');
+       return view('AdminDashboard.Forms.Posts.article',compact('articles'));}
+       else return view('MembreDashboard.Forms.Posts.article',compact('articles'));
     }
 
     /**
@@ -55,16 +57,34 @@ class ArticleScController extends Controller
      */
     public function store(Request $request)
     {
+        //$dynamicRowCount = is_array($this->input('Registration_Tag')) ? count($this->input('Registration_Tag')) : 0;
         $request->validate([
             "annee"=>"required",
             "titre" => "required",
             "lien" => "required",
             "file" => "required|mimes:pdf,doc,docx|max:10000",
             "date" => "",
-            "auteur" => "required",
-            "mail"=>"required",
-            "auteurex"=>"required",
-            "mailex"=>"required",
+            
+            /*"auteur" =>  [
+                'required',
+                'array',
+                "size:$dynamicRowCount",],
+            "mail"=> [
+                'required',
+                'array',
+                "size:$dynamicRowCount",],
+            "auteurex"=> [
+                'required',
+                'array',
+                "size:$dynamicRowCount",],
+            "mailex"=> [
+                'required',
+                'array',
+                "size:$dynamicRowCount",],*/
+                "auteur"=>"required",
+                "mail"=>"required",
+                "auteurex"=>"required",
+                "mailex"=>"required",
             "titre_journal"=>"required",
             "quartile"=>"in:Q1,Q2,Q3,Q4,Autre",
             "volume"=>"required",
@@ -82,16 +102,37 @@ class ArticleScController extends Controller
             }else{
             $file = '--';
             }
+            /*
+            $auteur = $request->auteur;
+            $mail = $request->mail;
+                for ($i=0; $i < count($auteur); $i++) { 
+                 $datasave=
+                    [
+                        'auteur' => $auteur[$i],
+                        'mail' => $mail[$i]
+                    ];
+                }
+            $auteurex = $request->auteurex ;
+            $mailex = $request-> mailex;
+            for ($i=0; $i < count($auteurex); $i++) { 
+                $datasave2=
+                   [
+                    'auteurex' => $auteurex[$i],
+                   'mailex' => $mailex[$i]
+                    ];
+               }*/
         $article= new ArticleSc();
         $article->annee = $request->annee;
         $article->titre = $request->titre;
         $article->lien = $request->lien;
         $article->file = $file;
         $article->date = $request->date;
+        //$article->datasave=$request->datasave;
+        //$article->datasave2=$request->datasave2;
         $article->auteur = $request->auteur;
         $article->mail = $request->mail;
-        $article-> auteurex = $request->auteurex ;
-        $article-> mailex = $request-> mailex;
+        $article->auteurex = $request->auteurex ;
+        $article->mailex = $request-> mailex;
         $article->titre_journal = $request->titre_journal;
         $article->quartile = $request->input('quartile');
         $article-> volume= $request->volume;

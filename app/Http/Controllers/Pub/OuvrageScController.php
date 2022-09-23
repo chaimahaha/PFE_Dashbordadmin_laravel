@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class OuvrageScController extends Controller
 {
     /**
@@ -20,10 +21,11 @@ class OuvrageScController extends Controller
      */
     public function index()
     {
+        $ouvrages=DB::table('ouvrage_scs')->paginate(3);
         if (Auth::user()-> is_admin ) {
-        return view('AdminDashboard.Forms.Posts.ouvrage');
+        return view('AdminDashboard.Forms.Posts.ouvrage',compact('ouvrages'));
        
-    } else return view('MembreDashboard.Forms.Posts.ouvrage');
+    } else return view('MembreDashboard.Forms.Posts.ouvrage',compact('ouvrages'));
 }
 
     /**

@@ -5,8 +5,52 @@
 @section('products')
 
 <div id="hab" >
+  <div class="container">
+    <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown">
+      <div class="card-header text-center fw-bold fs-4" style="color:#22577E">Habilitations</div>
+        <div class="card-body wow fadeInDown ">
+          <div class="table-responsive table" id="search" >
+            <table id="paper_table" class="table table-striped" >
+              <thead  class="table-danger  ">
+                <tr>
+                    <th >#</th>
+                    <th>Titre</th>
+                    <th>Nom & Prenom</th>
+                    <th>Année</th>
+                    <th>Encadrants</th>
+                    <th >Date</th>                                       
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                @foreach($habilitations as $hab)
+                <tr>
+                      <td> {{$hab->id}} </td>
+                      <td> {{$hab->titre}} </td>
+                      <td> {{$hab->nom}} </td>
+                      <td> {{$hab->annee}} </td>
+                      <td> {{$hab->encadrant}} </td>
+                      <td> {{$hab->date}} </td>
+                </tr>
+                @endforeach     
+              </tbody>
+            </table>
+            {{$habilitations->onEachSide(5)->links()}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown">
     <form action="/store-hab" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
+      @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
       <div class="col-sm-10 mt-3 mx-2">
             <h1>Habilitation</h1>
             <hr>
@@ -27,7 +71,7 @@
                   <input type="text" name="annee" class="form-control mt-2 " placeholder="Année">
               </div><br>
                                     
-              <div class="col-sm-12 form-group">
+              <div class="form-group">
                 <label class="fw-bold">Fichier (PDF, Taille maximale: 1024 ko)</label>
                 <input type="file" name="file" class="form-control mt-2" >
               </div><br>
@@ -56,7 +100,8 @@
                 <button type="submit" class="btn btn-outline-success mb-3 w-25" value="upload" id="submit" name="submit"  onclick="sweet()">Submit</button> 
               </div>
           </div>
-      </form>   
+    </form>
+    </div>   
   </div>
 </div>
 @endsection

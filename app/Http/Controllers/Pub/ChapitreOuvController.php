@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class ChapitreOuvController extends Controller
 {
     /**
@@ -16,9 +17,10 @@ class ChapitreOuvController extends Controller
      */
     public function index()
     {
+        $chapitres=DB::table('chapitre_ouvs')->paginate(3);
         if (Auth::user()-> is_admin ) {
-        return view('AdminDashboard.Forms.Posts.chapitre');}
-        else  return view('MembreDashboard.Forms.Posts.chapitre');
+        return view('AdminDashboard.Forms.Posts.chapitre',compact('chapitres'));}
+        else  return view('MembreDashboard.Forms.Posts.chapitre',compact('chapitres'));
     }
 
     /**

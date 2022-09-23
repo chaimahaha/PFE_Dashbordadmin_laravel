@@ -4,9 +4,61 @@
 @endsection
 @section('post')
 <div id="article_scientifique" >
-    <form action="/store-art" method="post" enctype="multipart/form-data">
+    <div class="container"> 
+        <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded">
+            <div class="card-header text-center fw-bold fs-4" style="color:#22577E">Articles scientifiques</div>
+            <div class="card-body ">
+                <div class="table-responsive table" id="search" >
+                    <table id="formation_table" class="table  table-striped" >
+                        <thead  class="table-info  ">
+                            <tr>
+                                    <th >#</th>
+                                    <th>Année</th>
+                                    <th>Titre</th>
+                                    <th>Auteurs</th>
+                                    <th>Titre du journal</th>
+                                    <th>Quartile </th>
+                                    <th>Volume</th>
+                                    <th>Facteur d'impact</th>  
+                                    <th>Indexation</th> 
+                                    <th>Site de la revue</th>  
+                            </tr>
+                        </thead>
+                        <tbody class="table-light">
+                          @foreach($articles as $art)
+                          <tr>
+                            <th> {{$art->id}} </th>
+                            <th> {{$art->annee}} </th>
+                            <th> {{$art->titre}} </th>
+                            <th> {{$art->auteur}},{{$art->auteurex}} </th>
+                            <th> {{$art->titre_journal}} </th>
+                            <th> {{$art->quartile}} </th>
+                            <th> {{$art->volume}} </th>
+                            <th> {{$art->impact}} </th>
+                            <th> {{$art->indexation}} </th>
+                            <th> {{$art->site_revue}} </th>
+                        </tr> 
+                        @endforeach                                   
+                        </tbody>
+                    </table>
+                    {{$articles->links()}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown">
+      <form action="/store-art" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
-        <div class="col-sm-10 mt-3 mx-2">
+        @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
+            <div class="col-sm-10 mt-3 mx-2">
             <h1>Création article scientifique</h1>
                 <legend>
                     <span><i class="bi bi-file-earmark-fill"></i>Informations article :</span>
@@ -36,7 +88,7 @@
                             <input type="file" name="file" class="form-control mt-2" >
                         </div><br>
                     </div><br>
-                    <div class="col-sm-6 form-group ">
+                    <div class="col-sm-12 form-group ">
                         <label class="fw-bold ">Date publication</label>
                         <span class="obligatoryFieldMark">*</span>
                         <input type="date" class="form-control mt-2 " name="date" id="datediplome" >
@@ -47,15 +99,34 @@
                         <div id="auteur_article">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <label class="control-label fw-bold">Auteur(s)</label>
-                                    <span class="obligatoryFieldMark">*</span><input type="text" name="auteur" class="form-control mt-2 " placeholder="Auteur 1,Auteur 2..">
+                                    <label class="control-label fw-bold">Auteur 1</label>
+                                    <span class="obligatoryFieldMark">*</span><textarea type="text" name="auteur" class="form-control mt-2 " placeholder="Auteur "></textarea>
                                 </div>     
                                 <div class="col-sm-6 form-group">
-                                    <label class="control-label fw-bold">Mail auteur(s)</label>
-                                    <span class="obligatoryFieldMark">*</span><input type="text" name="mail" class="form-control mt-2 " placeholder="Mail 1,Mail 2...">
+                                    <label class="control-label fw-bold">Mail auteur 1</label>
+                                    <span class="obligatoryFieldMark">*</span><textarea type="text" name="mail" class="form-control mt-2 " placeholder="Mail "></textarea>
                                 </div>
-                            </div><br> 
-                              
+                                {{--
+                                <div class="col-sm-2 form-group">
+                                    <label class="control-label fw-bold">Ordre</label> <br>
+                                    <select name="ordre" id="ordre" class="form-select mt-2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm mt-4">
+                                    <a role="button" class="btn btn-outline-primary mt-2" id="add_btn">+</a>
+                                </div>
+                                --}}
+                            </div><br>      
                         </div>
                     </div>
                     <br>
@@ -65,22 +136,41 @@
                         <div id="auteur_externe">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <label class="control-label fw-bold">Auteur externe (s)</label>
+                                    <label class="control-label fw-bold">Auteur externe 1</label>
                                     <span class="obligatoryFieldMark">*</span>
-                                    <input type="text" name="auteurex" class="form-control mt-2 " placeholder="Auteur_externe 1,Auteur_externe 2..">
+                                    <textarea type="text" name="auteurex" class="form-control mt-2 " placeholder="Auteur_externe 1"></textarea>
                                 </div>     
                                 <div class="col-sm-6 form-group">
-                                    <label class="control-label fw-bold">Mail externe (s)</label>
+                                    <label class="control-label fw-bold">Mail externe 1</label>
                                     <span class="obligatoryFieldMark">*</span>
-                                    <input type="text" name="mailex" class="form-control mt-2 " placeholder="Mail_externe 1,Mail_externe 2..">
-                                </div>    
-                            </div><br>        
+                                    <textarea type="text" name="mailex" class="form-control mt-2 " placeholder="Mail_externe 1"></textarea>
+                                </div>
+                                {{--
+                                <div class="col-sm-2 form-group">
+                                    <label class="control-label fw-bold">Ordre</label> <br>
+                                    <select name="ordre" id="ordre" class="form-select mt-2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm mt-4">
+                                    <a role="button" class="btn btn-outline-primary mt-2" id="add_externe">+</a>
+                                </div> 
+                                --}}   
+                            </div><br>       
                         </div>
                     </div>
             
                     <legend><br><span><i class="bi bi-book-fill"></i>Informations journal </span></legend>   
                     <hr>
-                    <span class="fw-bold">Recherche journal</span>
                     <div class="form-group"><br>
                         <label class="control-label fw-bold">Titre du journal</label>
                         <span class="obligatoryFieldMark">*</span>
@@ -143,4 +233,103 @@
     </div><br>
     </form>
 </div>
+</div>
+<script>
+    $(document).ready(function () {
+    var i = 1 ;
+    $("#add_btn").click(function (e) { 
+        e.preventDefault();
+        if(i<10){
+        i++;
+        $("#auteur_article").append(`<div class="from-group">
+                                    <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label class="control-label fw-bold">Auteur  `+i+`</label>
+                                    <span class="obligatoryFieldMark">*</span><input type="text" name="auteur[ `+i+`]" class="form-control mt-2 " placeholder="Auteur  `+i+`">
+                                </div>     
+                                <div class="col-sm-4 form-group">
+                                    <label class="control-label fw-bold">Mail auteur `+i+`</label>
+                                    <span class="obligatoryFieldMark">*</span><input type="text" name="mail[ `+i+`]" class="form-control mt-2 " placeholder="Mail  `+i+` ">
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <label class="control-label fw-bold">Ordre</label> <br>
+                                    <select name="ordre" id="ordre" class="form-select mt-2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm mt-4">
+                                    <a role="button" class="btn btn-outline-danger mt-2" id="remove">-</a>
+                                </div>
+                            </div>
+                            </div><br>`);}
+                            else{
+                                $("#auteur_article").append(`<span style="color:red;"> Vous avez dépacer la limite de nombre d'auteurs </span><br>`); 
+                            }
+                        
+        
+    });
+    });
+    $(document).ready(function () {
+    var i = 1 ;
+    $("#add_externe").click(function (e) { 
+        e.preventDefault();
+        if(i<10){
+        i++;
+        $("#auteur_externe").append(`<div class="from-group">
+                        <div id="auteur_externe">
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label class="control-label fw-bold">Auteur externe `+i+`</label>
+                                    <span class="obligatoryFieldMark">*</span>
+                                    <input type="text" name="auteurex[`+i+`]" class="form-control mt-2 " placeholder="Auteur_externe `+i+`">
+                                </div>     
+                                <div class="col-sm-4 form-group">
+                                    <label class="control-label fw-bold">Mail externe `+i+`</label>
+                                    <span class="obligatoryFieldMark">*</span>
+                                    <input type="text" name="mailex[`+i+`]" class="form-control mt-2 " placeholder="Mail_externe `+i+`">
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <label class="control-label fw-bold">Ordre</label> <br>
+                                    <select name="ordre" id="ordre" class="form-select mt-2">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm mt-4">
+                                    <a role="button" class="btn btn-outline-danger mt-2" id="remove">-</a>
+                                </div>    
+                            </div><br>        
+                        </div>
+                    </div>`);}
+                    else {
+                        $("#auteur_externe").append(`<span style="color:red;"> Vous avez dépacer la limite de nombre d'auteurs externes </span><br>`);
+                    }
+        
+    });
+    });
+    $(document).on('click','#remove', function (e) {
+    e.preventDefault();
+    let row_item = $(this).parent().parent()
+    $(row_item).remove();
+   
+    
+    });
+</script>
 @endsection

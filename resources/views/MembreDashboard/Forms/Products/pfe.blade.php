@@ -4,8 +4,54 @@
 @endsection
 @section('products')
 <div id="pfe">
+  <div class="container">
+    <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown" >
+      <div class="card-header text-center fw-bold fs-4" style="color:#22577E">PFE</div>
+        <div class="card-body wow fadeInDown ">
+          <div class="table-responsive table" id="search" >
+            <table id="paper_table" class="table table-striped" >
+              <thead  class="table-warning  ">
+                <tr>
+                    <th >#</th>
+                    <th>Titre</th>
+                    <th>Année</th>
+                    <th>Sujet</th>
+                    <th>Nom & Prenom</th>
+                    <th>Encadrants</th>
+                    <th>Institution</th>                                       
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                @foreach($pfes as $pfe)
+                <tr>
+                      <td> {{$pfe->id}} </td>
+                      <td> {{$pfe->titre}} </td>
+                      <td> {{$pfe->annee}} </td>
+                      <td>{{$pfe->description}}</td>
+                      <td> {{$pfe->etudiant}} </td>
+                      <td> {{$pfe->encadrant}},{{$pfe->encadrant_2}} </td>
+                      <td> {{$pfe->institut}} </td>
+                </tr>
+                @endforeach     
+              </tbody>
+            </table>
+            {{$pfes->onEachSide(5)->links()}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
     <form action="/store-pfe" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
+      @if ($errors->any())
+<div class="alert alert-danger">
+<ul>
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
     <div class="col-sm-10 mt-3 mx-2">   
           <h1>PFE</h1>
           <hr>

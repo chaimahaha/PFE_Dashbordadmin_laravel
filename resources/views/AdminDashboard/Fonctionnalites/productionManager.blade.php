@@ -27,13 +27,13 @@
                 <button class="btn btn-outline-success mx-2" ><a class="nav-link " aria-current="true" href="these">Thèse</a></button> 
               </li>
               <li class="nav-item " id="paper">
-                <button class="btn btn-outline-success mx-2"  ><a class="nav-link " href="hab" >Habilitation</a></button>
+                <button class="btn btn-outline-danger mx-2"  ><a class="nav-link " href="hab" >Habilitation</a></button>
               </li>
               <li class="nav-item " id="paper">
-                <button class="btn btn-outline-success mx-2"  ><a class="nav-link " href="pfe">PFE</a></button> 
+                <button class="btn btn-outline-warning mx-2"  ><a class="nav-link " href="pfe">PFE</a></button> 
               </li>
               <li class="nav-item " id="paper">
-                <button class="btn btn-outline-success mx-2" ><a class="nav-link " href="master">Master </a></button> 
+                <button class="btn btn-outline-info mx-2" ><a class="nav-link " href="master">Master </a></button> 
               </li>
             </ul>
           </div>

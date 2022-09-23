@@ -9,6 +9,7 @@ use App\Models\habilitation;
 use App\Models\Master;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class TheseController extends Controller
 {
     /**
@@ -18,9 +19,11 @@ class TheseController extends Controller
      */
     public function index()
     {
+        $theses =  DB::table('theses')->paginate(3);
         if (Auth::user()-> is_admin ) {
-        return view('AdminDashboard.Forms.Products.these');}
-        else return view('MembreDashboard.Forms.Products.these');
+        return view('AdminDashboard.Forms.Products.these',compact('theses')
+);}
+        else return view('MembreDashboard.Forms.Products.these',compact('theses'));
 
     }
 

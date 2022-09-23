@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class BrevetController extends Controller
 {
     /**
@@ -15,10 +16,10 @@ class BrevetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { $brevets=DB::table('brevets')->paginate(3);
         if (Auth::user()-> is_admin ) {
-        return view('AdminDashboard.Forms.Posts.brevet');}
-        else return view('MembreDashboard.Forms.Posts.brevet');
+        return view('AdminDashboard.Forms.Posts.brevet',compact('brevets'));}
+        else return view('MembreDashboard.Forms.Posts.brevet',compact('brevets'));
     }
 
     /**

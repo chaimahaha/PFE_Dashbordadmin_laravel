@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Pfe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB; 
 class PfeController extends Controller
 {
     /**
@@ -15,9 +16,10 @@ class PfeController extends Controller
      */
     public function index()
     {
+        $pfes=DB::table('pves')->paginate(3);
         if (Auth::user()-> is_admin ) 
-        return view('AdminDashboard.Forms.Products.pfe');
-        else return view('MembreDashboard.Forms.Products.pfe');
+        return view('AdminDashboard.Forms.Products.pfe',compact('pfes'));
+        else return view('MembreDashboard.Forms.Products.pfe',compact('pfes'));
     }
 
     /**
