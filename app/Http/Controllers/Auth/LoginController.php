@@ -30,7 +30,7 @@ class LoginController extends Controller
             return redirect('/dash');
         }
     
-        return redirect('membreHome');
+        return redirect('/profil');
     }
     /**
      * Where to redirect users after login.

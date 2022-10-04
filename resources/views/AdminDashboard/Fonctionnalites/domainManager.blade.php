@@ -7,7 +7,7 @@
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des domaines</h4>
     <div class="card">
       <h5 class="card-header">Domaines de recherche</h5>
-      <div class="table-responsive text-nowrap">
+      <div class="table-responsive ">
         <table class="table">
           <thead>
             <tr class="table-info text-center">
@@ -21,13 +21,13 @@
                   <td><strong>{{$dom->id}}</strong></td>
                   <td>
                       <div class="row">
-                        <div class="col-12 col-md-12d-flex align-items-stretch flex-column " >
-                          <div class="card bg-light d-flex flex-fill" >
+                        <div class="col-12 col-md-12 align-items-stretch  " >
+                          <div class="card bg-light  " >
                             <div class="card-body ">
                               <div class="row" >
                                 <div class="col-7"  >
                                   <h1 class="lead" style="color: rgb(47, 15, 228)"><strong> {{$dom->titre}}</strong><b></b></h1>
-                                  <div class="dropdown d-flex position-absolute top-0 end-0 ">
+                                  <div class="dropdown  position-absolute top-0 end-0 ">
                                     <button type="button" class="btn  dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                       <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
@@ -39,8 +39,8 @@
                                         ><i class="bx bx-trash me-1"></i> Delete</a>
                                       @endif
                                     </div>
-                                  </div>
-                                  <p class="text-muted text-sm mt-1"><b> {{$dom->description}}</b></p>
+                                  </div></div>
+                                  <p class="text-muted  mt-1"><b> {{$dom->description}}</b></p>
                                 </div>
                           </div>
                         </div>

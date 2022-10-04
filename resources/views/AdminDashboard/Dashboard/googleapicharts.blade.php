@@ -1,8 +1,14 @@
-@extends('AdminDashboard.Dashboard.dashboard1')
-@section('content1')
+@extends('AdminDashboard.layouts.sidebar')
+@section('title')
+Dashboard
+@endsection
+@section('content')
 <div class="col-sm-6 form-group"><br>
     <figure class="highcharts-figure">
-      <div id="piechart" style="width: 450px; height: 350px;">
+      <div id="piechart2" style="width: 450px; height: 350px;">
+    </div>
+    <div class="d-flex justify-content-center p-2">
+      <a  href="/dash">Afficher moins</a>
     </div>
     </figure>
   </div>
@@ -13,7 +19,7 @@
       function drawChart() {
         var data2 = google.visualization.arrayToDataTable([
           ['Classe', 'Conférence'],
-            <?php echo $chartsDatas ?>
+            <?php echo $chartsData ?>
         ]);
         var options2 = {
           title: 'Conférence par classe',

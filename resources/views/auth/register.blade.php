@@ -16,7 +16,15 @@
                                 <div class="col  me-2">  
                         <form action="/store-mem" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                        
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                            <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                            </ul>
+                            </div>
+                            @endif
                             <div class="col-sm-11 mt-3 mx-2">
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
@@ -82,7 +90,7 @@
                                  <div class="col-sm-12 form-group "><br>
                                     <label class="fw-bold m-2">Email</label>
                                     <span class="obligatoryFieldMark">*</span>
-                                    <input type="text" name="email" class="form-control " placeholder="Votre E-mail">
+                                    <input type="email" name="email" class="form-control " placeholder="Votre E-mail">
                                 </div><br>
                             </div>
                             <div class="row">

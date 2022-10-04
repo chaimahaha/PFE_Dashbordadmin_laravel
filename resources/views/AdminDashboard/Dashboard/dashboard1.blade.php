@@ -26,9 +26,9 @@ Dashboard
         <div id="container5"></div>
       </figure>
     </div>
-    <!--
-    <a class="btn" href="/pie">afficher la suite</a>
-   <div> @yield('content1')</div>-->
+  </div>
+  <div class="d-flex justify-content-center p-2">
+    <a  href="/pie">Afficher plus</a>
   </div>
   </div>
 <script src="https://www.gstatic.com/charts/loader.js"></script>

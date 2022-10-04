@@ -53,11 +53,11 @@ class Charts extends Controller
     function pieChart(){
         $results=DB::select(DB::raw("SELECT COUNT(*) as total_class , class FROM manifestations WHERE deleted_at IS NULL GROUP BY class
         "));
-        $chartsDatas="";
+        $chartsData="";
         foreach($results as $lists){
-            $chartsDatas .="['".$lists->class." ' ,      ".$lists->total_class."], ";
+            $chartsData .="['".$lists->class." ' ,  ".$lists->total_class."], ";
         }
-        $arrc['chartsDatas'] = rtrim($chartsDatas,",");
+        $arrc['chartsData'] = rtrim($chartsData,",");
         return view('AdminDashboard.Dashboard.googleapicharts',$arrc);
     }
 

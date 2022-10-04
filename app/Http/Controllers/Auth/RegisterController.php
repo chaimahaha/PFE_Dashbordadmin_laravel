@@ -63,7 +63,7 @@ class RegisterController extends Controller
             "grade"=>"in:Professeur,Maître de conférence,Docteur,Chercheur en thèse,Chercheur en mastère,Ingénieur,Assistant,Maître Assistant,Autre",
             "email"=>"required",
             "password"=>"required",
-            "photo" => "nullable|file|mimes:jpeg,png|max:5000",
+            "photo" => "file|mimes:jpeg,png|max:5000",
             "specialite"=>"nullable",
             "diplome"=>"nullable",
             "date" => "nullable",
