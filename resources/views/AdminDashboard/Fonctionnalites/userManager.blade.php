@@ -3,6 +3,32 @@
   Gestion des utilisateurs
 @endsection
 @section('content')
+<div class="card">
+  <div class="card-header">
+    <form class="row row-cols-lg-auto g-1">
+      <div class="col">
+        <input type="text" class="form-control" name="q" value="{{$q}}" placeholder="search here...">
+      </div>
+      <select  name="grade" class="card border-dark p-2"  selected>
+          <option value="">Chercher par Grade</option>
+          <option value="Professeur">Professeur</option>
+          <option value="Maître de conférence">Maître de conférence</option>
+          <option value="Docteur">Docteur</option>
+          <option value="Chercheur en thèse">Chercheur en thèse</option>
+          <option value="Chercheur en mastère">Chercheur en mastère</option>
+          <option value="Ingénieur ">Ingénieur </option>
+          <option value="Assistant">Assistant</option>
+          <option value="Maître Assistant">Maître Assistant</option>
+          <option value="Autre">Autre</option>
+      </select>
+      <div class="col">
+        <button class="btn btn">Chercher</button>
+      </div>
+    </form>
+ 
+  </div>
+  
+</div>
 <div class="container-xxl flex-grow-1 container-p-y">
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des utilisateurs</h4>
   <div class="card">
@@ -34,10 +60,10 @@
                                   <div class="dropdown-menu ">
                                     <a class="dropdown-item" href="{{url('/edit-user'.$user->id)}}"
                                       ><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                      @if(!$user->trashed())
+                                      {{--@if(!$user->trashed())--}}
                                       <a class="dropdown-item" href="{{url('delete-user?id='.$user->id)}};"
                                       ><i class="bx bx-trash me-1"></i> Delete</a>
-                                      @endif
+                                      {{--@endif--}}
                                       <form action="{{'defineadmin/'.$user->id}}" method="post">
                                         @csrf
                                         @method('PUT')
@@ -76,7 +102,9 @@
             </tbody>
       </table>  
     </div>
+    {{ $users->links() }}
   </div>
+ 
 </div>
 <div>
   <a href="adduser" role="button" class="btn btn-primary">Ajouter</a>

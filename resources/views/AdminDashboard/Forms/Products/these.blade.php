@@ -18,7 +18,8 @@
                     <th>Sujet</th>
                     <th>Année d'inscription</th>
                     <th>Encadrants</th>
-                    <th>Cotutelle</th>                                       
+                    <th>Cotutelle</th> 
+                                                       
                 </tr>
               </thead>
               <tbody class="table-light">
@@ -31,6 +32,7 @@
                       <td> {{$these->anneeinscrip}} </td>
                       <td> {{$these->encadrant}},{{$these->encadrant_2}} </td>
                       <td> {{$these->cotutelle}} </td>
+                      
                 </tr>
                 @endforeach     
               </tbody>
@@ -38,10 +40,13 @@
             {{ $theses->onEachSide(5)->links() }}
           </div>
         </div>
+      </div>
+      
+        
       </div>  
     </div>
     <div class="card  mt-5 shadow p-3 mb-5 bg-body rounded  wow fadeInDown">
-      <form action="/store-these" method="post" enctype="multipart/form-data">
+      <form action="/store-these" method="post" enctype="multipart/form-data" >
       {{ csrf_field() }}
       @if ($errors->any())
 <div class="alert alert-danger">
@@ -134,4 +139,14 @@
   </div>
 </div>
 @endsection
+<script>
+    let these = document.getElementById('these');
+  
+  function showThese(){
+    if(these.style.display === "none"){
+      these.style.display="block";
+
+  }
+}
+</script>
 

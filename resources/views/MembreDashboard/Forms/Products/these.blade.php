@@ -18,7 +18,8 @@
                     <th>Sujet</th>
                     <th>Année d'inscription</th>
                     <th>Encadrants</th>
-                    <th>Cotutelle</th>                                       
+                    <th>Cotutelle</th>
+                                                         
                 </tr>
               </thead>
               <tbody class="table-light">
@@ -31,6 +32,7 @@
                       <td> {{$these->anneeinscrip}} </td>
                       <td> {{$these->encadrant}},{{$these->encadrant_2}} </td>
                       <td> {{$these->cotutelle}} </td>
+                     
                 </tr>
                 @endforeach     
               </tbody>
@@ -40,8 +42,11 @@
         </div>
       </div>  
     </div>
+    <div class="mt-2">
+      <input type="button" class="btn btn-primary" onclick="showThese()">Ajouter</a>
+    </div>
   </div>
-    <form action="/store-these" method="post" enctype="multipart/form-data">
+    <form action="/store-these" method="post" enctype="multipart/form-data" id="these" style="display: none">
       {{ csrf_field() }}
       @if ($errors->any())
 <div class="alert alert-danger">
@@ -133,4 +138,13 @@
     
 </div>
 @endsection
+<script>
+  let these = document.getElementById('these');
 
+function showThese(){
+  if(these.style.display === "none"){
+    these.style.display="block";
+
+}
+}
+</script>

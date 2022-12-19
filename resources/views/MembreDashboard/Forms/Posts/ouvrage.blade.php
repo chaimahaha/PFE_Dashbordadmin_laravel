@@ -19,7 +19,8 @@
                                 <th>Editeur</th>
                                 <th>Edition</th>
                                 <th>ISBN/Issn</th>
-                                <th>Date </th>   
+                                <th>Date </th>
+                      
                         </tr>
                     </thead>
                     <tbody class="table-light">
@@ -33,6 +34,7 @@
                         <th> {{$ouv->edition}} </th>
                         <th> {{$ouv->isbn}} </th>
                         <th> {{$ouv->date}} </th>
+                       
                     </tr> 
                     @endforeach                                  
                     </tbody>

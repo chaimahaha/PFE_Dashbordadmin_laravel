@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THEMES DE RECHERCHE</title>
+    <title>MEMBRES</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
@@ -14,13 +13,10 @@
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="sweetalert2.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
-    
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap');
     </style>
     <link rel="stylesheet" href="sweetalert2.min.css">
-    
     <style>
       .dropdown:hover .dropdown-menu{
         display: block;
@@ -55,9 +51,9 @@
           </a>  
         </li>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="theme"  style="color:#0d47a1"> 
-              Théme de recherche
-            </a>  
+          <a class="nav-link active" aria-current="page" href="theme"  style="color:#0d47a1"> 
+            Théme de recherche
+          </a>  
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="pub"  style="color:#0d47a1"> 
@@ -77,11 +73,11 @@
           
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link active" aria-current="page" href="actualites"  style="color:#0d47a1">
-            Actualités
-            </a>
-          </li>
-          <li class="nav-item dropdown">
+          <a class="nav-link active" aria-current="page" href="actualites"  style="color:#0d47a1">
+          Actualités
+          </a>
+        </li>
+        <li class="nav-item dropdown">
             <a class="nav-link active" aria-current="page" href="membres"  style="color:#0d47a1">
             Membres
             </a>
@@ -114,7 +110,7 @@
                         {{ Auth::user()->name }}
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -138,37 +134,43 @@
   
 </nav>
 <div >
-  <img src="img\chh.jpg" alt="" id="image" class="wow fadeInRight rounded" width="100%" height="150px">
+    <img src="img\chh.jpg" alt="" id="image" class="wow fadeInRight rounded" width="100%" height="150px">
 </div>
-    <div class="container">
-                <div class="card mt-5 shadow p-3 mb-5 bg-body rounded wow fadeInDown" >
-                    <div class="card-header text-center fw-bold fs-4" style="color:#22577E">Thème de recherche</div>
-                      <div class="card-body  wow fadeInDown ">
-                          @foreach ($domaines as $dom)
-                          <div class="row">
-                            <div class="col-12 col-md-12d-flex align-items-stretch  " >
-                              <div class="card bg-light d-flex flex-fill mb-3" >
-                                <div class="card-body ">
-                            <div class="row">
-                                  <div class="card-body ">
-                                    <div class="row" >
-                                      <div class="">
-                                        <h1 class="lead btn" style="color: rgb(26, 9, 121);text-transform:uppercase" ><strong> {{$dom->titre}}</strong><b></b></h1>
-                                        <p class="" >{{$dom->description}}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
+<div class="container"style="max-width:90%;">             
+  <div class="card mt-5 shadow p-3 mb-5 bg-body rounded ">
+      <div class="card-header text-center fw-bold fs-4" style="color:#22577E">LES MEMBRES DU SETIT</div>
+      <div class="card-body "> 
+        <div class="row">
+          
+           @foreach($users as $us)
+            <div class="col-4">
+            <div class="card mb-3" style="max-width: 500px;">
+              <div class="row">
+                <div class="col-md-3 m-1 ">
+                  <img src="{{url('user_image/'.$us->photo)}}"alt="" width="100px" height="100px" />
                 </div>
-                          @endforeach
-                      </div>
-                    </div>
-                    </div>
+                <div class="col">
+                  <div class="card-body">
+                    <h5 class="card-title" style="color:#0d47a1">{{$us->prenom}}</h5>
+                    <h6 class="card-text ">{{$us->grade}}</h6>
                   </div>
-      </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+            @endforeach
+          
+        </div>
+        {{ $users->links() }}
+      </div>
+      </div>
+      </div>
+      </div>
+  </div>
+</div>
+
+
  <!-- Footer -->
  <footer class="text-center text-lg-start  text-muted mt-5" style="background-color:#EEEEEE;">
     <!-- Section: Social media -->
@@ -195,8 +197,8 @@
     <!-- Section: Social media -->
   
     <!-- Section: Links  -->
-    <section class="">
-  
+    <section class=""> 
+          <!-- Grid column -->
           <div class="m-4  mb-4 ">
             <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4" style="color:#0d47a1">
@@ -225,7 +227,5 @@
     <!-- Copyright -->
   </footer>
   <!-- Footer -->
-  
 </body>
 </html>
-    

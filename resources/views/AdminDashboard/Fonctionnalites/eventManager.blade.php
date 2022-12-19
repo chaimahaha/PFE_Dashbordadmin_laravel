@@ -34,7 +34,7 @@
                               <a class="dropdown-item" href="{{url('/edit-event'.$event->id)}}"
                                 ><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                 @if(!$event->trashed())
-                              <a class="dropdown-item" href="{{url('delete-event?id='.$event->id)}};"
+                              <a class="dropdown-item" href="{{url('delete-event?id='.$event->id)}}"
                                 ><i class="bx bx-trash me-1"></i> Delete</a>
                                 @endif
                             </div>

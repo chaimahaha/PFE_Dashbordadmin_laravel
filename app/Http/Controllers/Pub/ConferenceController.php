@@ -64,7 +64,7 @@ class ConferenceController extends Controller
             "auteurex"=>"required",
             "mailex"=>"required",
             "confname"=>"required",
-            "class"=>"in:a,b,c,internationale"       
+            "class"=>"in:a,b,c,Internationale"     
            ]);
            if($request->hasfile('file'))
            {

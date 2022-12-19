@@ -20,6 +20,7 @@
                             <th>Edition</th>
                             <th>ISBN/Issn</th>
                             <th>Date</th>
+                            
                     </tr>
                 </thead>
                 <tbody class="table-light">
@@ -33,6 +34,7 @@
                     <th> {{$chap->edition}} </th>
                     <th> {{$chap->isbn}} </th>
                     <th> {{$chap->date}} </th>
+                  
                 </tr> 
                 @endforeach                                    
                 </tbody>

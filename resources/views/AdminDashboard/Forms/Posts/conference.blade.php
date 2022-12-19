@@ -18,6 +18,7 @@
                             <th>Auteurs</th>
                             <th>Nom de conférence</th>
                             <th >Classe</th>
+                           
                         </tr>
                     </thead>
                     <tbody class="table-light">
@@ -29,6 +30,7 @@
                         <th> {{$conf->auteur }},{{$conf->auteurex }} </th>
                         <th> {{$conf->confname }} </th>
                         <th> {{$conf->class }} </th>
+                        
                     </tr> 
                     @endforeach                             
                     </tbody>

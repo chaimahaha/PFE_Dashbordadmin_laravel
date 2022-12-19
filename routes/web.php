@@ -20,6 +20,7 @@ Route::get('actualites', [App\Http\Controllers\VitrinController::class, 'showAct
 Route::get('prodcop', [App\Http\Controllers\VitrinController::class, 'showProd'])->name('prodcop');
 Route::get('pub', [App\Http\Controllers\VitrinController::class, 'showPub'])->name('pub');
 Route::get('theme', [App\Http\Controllers\VitrinController::class, 'show'])->name('theme');
+Route::get('membres',[App\Http\Controllers\Auth\RegisterController::class, 'showVit'])->name('membres');
 Route::get('/login', function () { return view('auth.login');});
 Auth::routes();
 Route::post('register-form', [App\Http\Controllers\Auth\RegisterController::class, 'store'])->name('register.form');

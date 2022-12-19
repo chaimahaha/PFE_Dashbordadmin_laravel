@@ -21,7 +21,8 @@
                                     <th>Volume</th>
                                     <th>Facteur d'impact</th>  
                                     <th>Indexation</th> 
-                                    <th>Site de la revue</th>  
+                                    <th>Site de la revue</th> 
+                                   
                             </tr>
                         </thead>
                         <tbody class="table-light">
@@ -37,6 +38,7 @@
                             <th> {{$art->impact}} </th>
                             <th> {{$art->indexation}} </th>
                             <th> {{$art->site_revue}} </th>
+                            
                         </tr> 
                         @endforeach                                   
                         </tbody>

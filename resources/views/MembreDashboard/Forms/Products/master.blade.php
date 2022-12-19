@@ -18,7 +18,8 @@
                     <th>Sujet</th>
                     <th>Nom & Prenom</th>
                     <th>Encadrants</th>
-                    <th>Institution</th>                                       
+                    <th>Institution</th>  
+                                                      
                 </tr>
               </thead>
               <tbody class="table-light">
@@ -31,6 +32,7 @@
                       <td> {{$master->etudiant}} </td>
                       <td> {{$master->encadrant}},{{$master->encadrant_2}} </td>
                       <td> {{$master->institut}} </td>
+                      
                 </tr>
                 @endforeach     
               </tbody>

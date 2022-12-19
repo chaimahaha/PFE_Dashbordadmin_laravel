@@ -18,7 +18,7 @@
                       <th>Auteurs</th>
                       <th>Sujet</th>
                       <th>Date</th>
-                      
+                   
                     </tr>
                 </thead>
                 <tbody class="table-light">
@@ -30,6 +30,7 @@
                     <th> {{$brev->auteur}},{{$brev->auteurex}} </th>
                     <th> {{$brev->sujet}} </th>
                     <th> {{$brev->date}} </th>
+                    
                 </tr> 
                 @endforeach                                    
                 </tbody> 

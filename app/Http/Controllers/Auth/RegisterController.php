@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -151,10 +152,22 @@ class RegisterController extends Controller
         ]);
     }
    
-    public function show()
-    {
-        $users = User::all();
-        return View('AdminDashboard.Fonctionnalites.userManager',compact('users'));
+    public function show(Request $request)
+    {   $data['q']= $request->query('q');
+        $data['grade']=$request->query('grade');
+        $query = DB::table('users')->where (function ($query) use($data){
+            $query->where('prenom', 'like', '%' .$data['q'].'%');
+            $query->orWhere('nom', 'like', '%' .$data['q'].'%');
+            $query->orWhere('fctadmin', 'like', '%' .$data['q'].'%');
+            $query->orWhere('scopus', 'like', '%' .$data['q'].'%');
+            $query->orWhere('orcid', 'like', '%' .$data['q'].'%');
+        });
+       if($data['grade']){
+            $query->where('users.grade',$data['grade']);
+        }
+        $data['users'] = $query->paginate(9);
+        
+        return View('AdminDashboard.Fonctionnalites.userManager',$data);
         //compact t3adi les données lel vue
 
     }
@@ -169,7 +182,7 @@ class RegisterController extends Controller
         }
         User::find($request->id)->delete();
         return back()
-            ->with('status', 'User deleted successfully');
+            ->with('status', 'User deleted successfully')->withTrashed();
     }
     function editUser($id){
         $users = User::find($id);
@@ -260,5 +273,9 @@ public function retireAdmin($id){
     else 
     return redirect()->back()->with('status','cet utilisateur est actuellement définie comme un membre ');
 }
+public function showVit(){
+    $users= User::paginate(9);
+    return view('membres',compact('users'));
 
+}
 }

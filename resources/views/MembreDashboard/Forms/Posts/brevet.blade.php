@@ -30,6 +30,7 @@
                     <th> {{$brev->auteur}},{{$brev->auteurex}} </th>
                     <th> {{$brev->sujet}} </th>
                     <th> {{$brev->date}} </th>
+                    
                 </tr> 
                 @endforeach                                    
                 </tbody> 

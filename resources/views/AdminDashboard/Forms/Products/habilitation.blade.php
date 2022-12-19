@@ -18,7 +18,8 @@
                     <th>Nom & Prenom</th>
                     <th>Année</th>
                     <th>Encadrants</th>
-                    <th >Date</th>                                       
+                    <th >Date</th>
+                                                   
                 </tr>
               </thead>
               <tbody class="table-light">
@@ -30,6 +31,7 @@
                       <td> {{$hab->annee}} </td>
                       <td> {{$hab->encadrant}} </td>
                       <td> {{$hab->date}} </td>
+                      
                 </tr>
                 @endforeach     
               </tbody>

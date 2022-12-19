@@ -70,9 +70,17 @@
           <a class="nav-link active" aria-current="page" href="manif"  style="color:#0d47a1">
           Manifestation
           </a>
-          
+          <li class="nav-item dropdown">
+            <a class="nav-link active" aria-current="page" href="actualites"  style="color:#0d47a1">
+            Actualités
+            </a>
+          </li>
         </li>
-        
+        <li class="nav-item dropdown">
+          <a class="nav-link active" aria-current="page" href="membres"  style="color:#0d47a1">
+          Membres
+          </a>
+      </li>
       </ul>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Left Side Of Navbar -->

@@ -90,9 +90,6 @@
                   <input class="form-check-input" type="radio" name="class" id="male" value="internationale" >
                   <label class="form-check-label " for="male" >Internationale</label>
                 </div>
-                @error('class')
-                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                @enderror
               </div><br>
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-outline-success mb-3 w-25" value="upload" id="submit" name="submit">Submit</button>	
