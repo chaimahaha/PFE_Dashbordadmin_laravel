@@ -107,6 +107,7 @@ Route::group(['middleware' => ['is_admin']], function () {
     Route::get('/pie',[App\Http\Controllers\Charts::class, 'pieChart']);
     Route::get('message',[App\Http\Controllers\MessagerieController::class, 'show']);
     Route::get('deletemsg',[App\Http\Controllers\MessagerieController::class, 'deleteMsg']);
+    Route::put('nonlu/{id}',[App\Http\Controllers\MessagerieController::class, 'nonlu']);
     Route::get('userManager', [App\Http\Controllers\Auth\RegisterController::class, 'show'])->name('userManager');
     Route::get('adduser',[App\Http\Controllers\Auth\RegisterController::class, 'index']);
     Route::get('/delete-user',[App\Http\Controllers\Auth\RegisterController::class,'deleteUser']);

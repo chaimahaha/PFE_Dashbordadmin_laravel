@@ -8,7 +8,8 @@
   <div class="card">
     <h5 class="card-header">Messages</h5>
     @foreach ($messages as $msg)
-        <div class="table-responsive text-nowrap">
+    <div>
+        <div class=" text-nowrap">
           
          <span class="text-muted fw-light text-primary m-2"> {{\App\Models\User::findOrFail($msg->id_user)->nom}} {{\App\Models\User::findOrFail($msg->id_user)->prenom}} :</span> 
          
@@ -22,11 +23,18 @@
               <a class="dropdown-item" href="{{url('deletemsg?id='.$msg->id)}};"
               ><i class="bx bx-trash me-1"></i> Delete</a>
             @endif
+            <form action="{{'nonlu/'.$msg->id}}" method="post">
+              @csrf
+              @method('PUT')
+              <button type="submit" class="btn btn-light bi bi-person-plus-fill ">Marquer comme non lu</button>
+            </form>
           </div>
         </div>
-    </div> <hr> <br>
+      
+  </div> <hr>
     @endforeach
-    
   </div>
+
 </div>
+
 @endsection

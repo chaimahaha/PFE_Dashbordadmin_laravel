@@ -65,7 +65,16 @@ class MessagerieController extends Controller
         $messages=Messagerie::where('id_user', Auth::user()->id)->get();
         return view ('MembreDashboard.Fonctionnalites.envoieMessage',compact('messages'));
     }}
-
+    public function nonlu($id){
+        $message=Messagerie::findOrFail($id);
+        if($message->is_lu==false){
+            $message->is_lu=true;
+            $message->save();
+            return redirect()->back()->with('status','Message marqué comme lu');
+        }
+        else 
+        return redirect()->back()->with('status','Message est déja marqué comme lu');
+    }
     /**
      * Show the form for editing the specified resource.
      *
