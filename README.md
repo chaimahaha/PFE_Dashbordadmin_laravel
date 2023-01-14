@@ -6,6 +6,7 @@ Laravel 9
               => Gestion des comptes utilisateurs ( Modifier, Supprimer, Ajouter, Définir tant qu'admin, Retirer tant qu' admin) 
               => Gestion des publications, des manifestations,, 
               => Gestion de contenu de la vitrin de site 
+              => Gestion des messages reçus (Supprimer, marqué comme lu (pour indiquer à l'emetteur l'acquisé de reception et de l'avoir contacter par mail )
 # Espace Membre 
                => Envoyer des messages aux admins de site 
                => Ajouter/Modifier/Supprimer des Publications, des productions..
