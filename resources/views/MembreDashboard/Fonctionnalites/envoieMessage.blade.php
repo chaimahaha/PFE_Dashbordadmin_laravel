@@ -29,7 +29,7 @@
                     <span class="text-muted fw-light">You:</span> {{$msg->msg}}
                     <br>
                       @if ($msg->is_lu==true)
-                      <span class="text-info text-sm"> Vu .. je vais vous contacter par mail </span>    
+                      <span class="text-info text-sm"> Vu .. je vais vous contacter par mail</span>    
                       @else
                       <span class="text-muted fw-lighter"></span>    
                       @endif
