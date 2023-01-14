@@ -22,7 +22,7 @@
           <div class="col">
             <div class="card border-dark shadow p-3 mb-5 bg-body rounded">
               <div class="card-header text-center h3" style="color:#22577E">Messagerie</div>
-              <button class="btn btn" onclick="consulterListe()">Voir message envoyer</button>
+              <button class="btn btn" onclick="consulterListe()">Voir messages envoyés</button>
               <div id="msg_env" style="display: none">  
               @foreach($messages as $msg)
                   <div class="card-body">
