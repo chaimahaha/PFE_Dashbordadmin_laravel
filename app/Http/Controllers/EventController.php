@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class EventController extends Controller
 {
     /**
@@ -83,11 +84,19 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $events = Event::all();
+        $data['q']= $request->query('q');
+        $query = DB::table('events')->where (function ($query) use($data){
+            $query->where('titre', 'like', '%' .$data['q'].'%');
+            $query->orWhere('description', 'like', '%' .$data['q'].'%');
+           
+        });
+      
+        $data['events'] = $query->paginate(9);
+      
 
-        return View('AdminDashboard.Fonctionnalites.eventManager',compact('events'));
+        return View('AdminDashboard.Fonctionnalites.eventManager',$data);
         //compact t3adi les données lel vue
 
     }

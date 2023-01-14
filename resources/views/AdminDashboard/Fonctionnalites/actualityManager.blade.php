@@ -3,6 +3,17 @@
   Gestion des actualités
 @endsection
 @section('content')
+<div class="card-header">
+  <form class="row ">
+    <div class="col">
+      <input type="text" class="form-control w-100" name="q" value="{{$q}}" placeholder="search here...">
+    </div>
+    <div class="col col-lg-2">
+      <button class="btn btn">Chercher</button>
+    </div>
+  </form>
+
+</div>
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des actualités</h4>
     <div class="card">
@@ -34,10 +45,10 @@
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{url('/edit-act'.$act->id)}}"
                       ><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                      @if(!$act->trashed())
+                      
                     <a class="dropdown-item" href="{{url('delete-act?id='.$act->id)}};"
                       ><i class="bx bx-trash me-1"></i> Delete</a>
-                      @endif
+                   
                   </div>
                 </div>
               </td>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\returnSelf;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class CooperationController extends Controller
 {
     /**
@@ -87,11 +88,23 @@ class CooperationController extends Controller
      * @param  \App\Models\Cooperation  $cooperation
      * @return \Illuminate\Http\Response
      */
-    public function show(Cooperation $cooperation)
+    public function show(Request $request)
     {
-        $cooperations = Cooperation::all();
+        $data['q']= $request->query('q');
+        $data['type']=$request->query('type');
+        $query = DB::table('cooperations')->where (function ($query) use($data){
+            $query->where('intervenantnat', 'like', '%' .$data['q'].'%');
+            $query->orWhere('intervenantin', 'like', '%' .$data['q'].'%');
+            $query->orWhere('sujet', 'like', '%' .$data['q'].'%');
+            $query->orWhere('institution', 'like', '%' .$data['q'].'%');
+            
+        });
+       if($data['type']){
+            $query->where('cooperations.type',$data['type']);
+        }
+        $data['cooperations'] = $query->paginate(9);
         if (Auth::user()-> is_admin ) {
-        return View('AdminDashboard.Fonctionnalites.cooperationManager',compact('cooperations'));
+        return View('AdminDashboard.Fonctionnalites.cooperationManager',$data);
     } else return View('MembreDashboard.Fonctionnalites.cooperationManager',compact('cooperations'));
 }
     function deleteCooperation(Request $request)

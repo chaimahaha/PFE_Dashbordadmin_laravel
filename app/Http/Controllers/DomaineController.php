@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Domaine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class DomaineController extends Controller
 {
     /**
@@ -56,11 +57,19 @@ class DomaineController extends Controller
      * @param  \App\Models\Domaine  $domaine
      * @return \Illuminate\Http\Response
      */
-    public function show(Domaine $domaine)
+    public function show(Request $request)
     {
-        $domaines = Domaine::all();
+        $data['q']= $request->query('q');
+        $query = DB::table('domaines')->where (function ($query) use($data){
+            $query->where('titre', 'like', '%' .$data['q'].'%');
+            $query->orWhere('description', 'like', '%' .$data['q'].'%');
+           
+        });
+      
+        $data['domaines'] = $query->paginate(9);
+      
 
-        return View('AdminDashboard.Fonctionnalites.domainManager',compact('domaines'));
+        return View('AdminDashboard.Fonctionnalites.domainManager',$data);
     }
     function deleteDomaine(Request $request)
     {

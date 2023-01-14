@@ -7,6 +7,7 @@ use App\Models\Manifestation;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class ManifestationController extends Controller
 {
     /**
@@ -71,11 +72,30 @@ class ManifestationController extends Controller
      * @param  \App\Models\Manifestation  $manifestation
      * @return \Illuminate\Http\Response
      */
-    public function show(Manifestation $manifestation)
+    public function show(Request $request)
     {
-        $manifestations = Manifestation::all();
-        $formations = Formation::all();
-        return View('AdminDashboard.Fonctionnalites.manifestationManager',compact('manifestations','formations'));
+        $data['q']= $request->query('q');
+        $data['class']=$request->query('class');
+        $query = DB::table('manifestations')
+        ->where (function ($query) use($data){
+            $query->where('titre', 'like', '%' .$data['q'].'%');
+            $query->orWhere('lieu', 'like', '%' .$data['q'].'%');
+            $query->orWhere('prix', 'like', '%' .$data['q'].'%');
+        });
+        $query2 = DB::table('formations')
+        ->where (function ($query) use($data){
+            $query->where('titre', 'like', '%' .$data['q'].'%');
+            $query->orWhere('lieu', 'like', '%' .$data['q'].'%');
+            $query->orWhere('prix', 'like', '%' .$data['q'].'%');
+            $query->orWhere('formateur', 'like', '%' .$data['q'].'%');
+         
+        });
+       if($data['class']){
+            $query->where('manifestations.class',$data['class']);
+        }
+        $data['manifestations'] = $query->paginate(9);
+        $data['formations'] = $query2->paginate(9);
+        return View('AdminDashboard.Fonctionnalites.manifestationManager',$data);
     }
     function deleteManifestation(Request $request)
     {

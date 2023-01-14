@@ -3,6 +3,17 @@
   Gestion des domaines
 @endsection
 @section('content')
+<div class="card-header">
+  <form class="row ">
+    <div class="col">
+      <input type="text" class="form-control w-100" name="q" value="{{$q}}" placeholder="search here...">
+    </div>
+    <div class="col col-lg-2">
+      <button class="btn btn">Chercher</button>
+    </div>
+  </form>
+
+</div>
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fonctionnalités /</span> Gestion des domaines</h4>
     <div class="card">
@@ -34,10 +45,10 @@
                                     <div class="dropdown-menu ">
                                       <a class="dropdown-item" href="{{url('/edit-dom'.$dom->id)}}"
                                         ><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                      @if(!$dom->trashed())
+                                      
                                         <a class="dropdown-item" href="{{url('delete-dom?id='.$dom->id)}};"
                                         ><i class="bx bx-trash me-1"></i> Delete</a>
-                                      @endif
+                                      
                                     </div>
                                   </div></div>
                                   <p class="text-muted  mt-1"><b> {{$dom->description}}</b></p>

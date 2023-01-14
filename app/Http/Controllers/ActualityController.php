@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Actuality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 class ActualityController extends Controller
 {
     /**
@@ -70,11 +71,19 @@ class ActualityController extends Controller
      * @param  \App\Models\Actuality  $actuality
      * @return \Illuminate\Http\Response
      */
-    public function show(Actuality $actuality)
+    public function show(Request $request)
     {
-        $actualities = Actuality::all();
+        $data['q']= $request->query('q');
+        $query = DB::table('actualities')->where (function ($query) use($data){
+            $query->where('titre', 'like', '%' .$data['q'].'%');
+            $query->orWhere('description', 'like', '%' .$data['q'].'%');
+           
+        });
+      
+        $data['actualities'] = $query->paginate(9);
+      
 
-        return View('AdminDashboard.Fonctionnalites.actualityManager',compact('actualities'));
+        return View('AdminDashboard.Fonctionnalites.actualityManager',$data);
     }
     function deleteActuality(Request $request)
     {
