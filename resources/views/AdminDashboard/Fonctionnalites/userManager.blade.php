@@ -5,10 +5,11 @@
 @section('content')
 <div class="card">
   <div class="card-header">
-    <form class="row row-cols-lg-auto g-1">
+    <form class="row ">
       <div class="col">
-        <input type="text" class="form-control" name="q" value="{{$q}}" placeholder="search here...">
+        <input type="text" class="form-control w-100" name="q" value="{{$q}}" placeholder="search here...">
       </div>
+      <div class="col-md-auto">
       <select  name="grade" class="card border-dark p-2"  selected>
           <option value="">Chercher par Grade</option>
           <option value="Professeur">Professeur</option>
@@ -21,7 +22,8 @@
           <option value="Maître Assistant">Maître Assistant</option>
           <option value="Autre">Autre</option>
       </select>
-      <div class="col">
+      </div>
+      <div class="col col-lg-2">
         <button class="btn btn">Chercher</button>
       </div>
     </form>
